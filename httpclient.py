@@ -192,12 +192,12 @@ def read_headers(data_socket):
         if header_value == b'chunked':
             is_chunked = True
         if header_name == b'Content-Length':
-            content_length = header_value
+            content_length = int(header_value)
     return content_length, is_chunked
 
 
 def get_header_name_value(line):
-    name_value_split = line.decode().split(': ')
+    name_value_split = line.decode()[:len(line)-2].split(': ')
     name = name_value_split[0].encode()
     value = name_value_split[1].encode()
     return name, value
