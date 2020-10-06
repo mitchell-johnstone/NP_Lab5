@@ -36,7 +36,7 @@ def main():
     """
 
     # These resource request should result in "Content-Length" data transfer
-    #get_http_resource('http://www.httpvshttps.com/check.png', 'check.png')
+    get_http_resource('http://www.httpvshttps.com/check.png', 'check.png')
 
     # this resource request should result in "chunked" data transfer
     get_http_resource('http://www.httpvshttps.com/','index.html')
@@ -107,15 +107,17 @@ def do_http_exchange(host, port, resource, file_name):
     request_line = b'GET ' + resource + b' HTTP/1.1\r\nHost: ' + host + b'\r\n\r\n'
     tcp_server.sendall(request_line)
 
-    status_code = parse_message(response.decode('ASCII'), "message_destination.txt")
     """
     Gotta do work here!
     Edit to make it run.
     function go brrrr.
     """
  
-    return parse_message(tcp_server, 'output_destination.txt')  # Replace this "server error" with the actual status code
+    return parse_message(tcp_server, file_name)  # Replace this "server error" with the actual status code
 
+
+# Transfer-Encoding: chunked\r\n
+# Content-Length: 193\r\n
 def parse_message(data_socket, filename):
     status_code = -1
     #SECTION ABOVE RESERVED FOR THE GETTING THE STATUS CODE
@@ -139,6 +141,7 @@ def get_header_name_value(line):
     name = name_value_split[0].encode()
     value = name_value_split[1].encode()
     return name, value
+
 """OVERALL MESSAGE HANDLING"""
 
 def read_line(data_socket):
