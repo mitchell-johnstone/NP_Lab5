@@ -107,40 +107,32 @@ def do_http_exchange(host, port, resource, file_name):
     request_line = b'GET ' + resource + b' HTTP/1.1\r\nHost: ' + host + b'\r\n\r\n'
     tcp_server.sendall(request_line)
 
-    status_code = parse_message(response.decode('ASCII'), "message_destination.txt")
     """
     Gotta do work here!
     Edit to make it run.
     function go brrrr.
     """
  
-    return parse_message(tcp_server, 'output_destination.txt')  # Replace this "server error" with the actual status code
+    return parse_message(tcp_server, file_name)  # Replace this "server error" with the actual status code
 
+
+# Transfer-Encoding: chunked\r\n
+# Content-Length: 193\r\n
 def parse_message(data_socket, filename):
-    status_code = -1
-    #SECTION ABOVE RESERVED FOR THE GETTING THE STATUS CODE
-    content_length = -1
-    is_chunked = False
-    while True:
-        current_line = get_next_line(data_socket)
-        header_name, header_value = get_header_name_value(current_line)
-        if header_value == b'chunked':
-            is_chunked = True
-        if header_name == b'Content-Length':
-            content_length = header_value
-        if len(current_line) == 2:
-            break
+
+    #getting the status code
+    status_code = read_status_line(data_socket)
+
+    # Reading through the headers, getting vital information
+    content_length, is_chunked = read_headers(data_socket)
+
     message = parse_body(data_socket, is_chunked, content_length)
     output_file = open(filename, 'wb')
     return status_code
-    
-def get_header_name_value(line):
-    name_value_split = line.decode().split(': ')
-    name = name_value_split[0].encode()
-    value = name_value_split[1].encode()
-    return name, value
-"""OVERALL MESSAGE HANDLING"""
 
+
+
+"""OVERALL MESSAGE HANDLING"""
 def read_line(data_socket):
     """
     Reads the next line of the message.
@@ -149,11 +141,10 @@ def read_line(data_socket):
     :author: Jonathan Keane
     """
     message = b''
-    while True:
+    while message[-2:] != b'\r\n':
         current_char = next_byte(data_socket)
         message += current_char
-        if message[-2:] == b'\r\n':
-            return message
+    return message
 
 
 def next_byte(data_socket):
@@ -174,15 +165,48 @@ def next_byte(data_socket):
 
 
 """STATUS LINE"""
+def read_status_line(data_socket):
+    """
 
+    :param data_socket:
+    :return:
+    """
+    return 200
 
 
 """HEADER INTERPRETATION"""
+def read_headers(data_socket):
+    """
+    Should go through all the headers, checking if the body is
+    chunked or length-oriented.
+    :param data_socket:
+    :return:
+    :author: Jonny Keane
+    :editor: Mitchell Johnstone
+    """
+    current_line = b''
+    is_chunked, content_length = False, -1
+    while len(current_line) != 2:
+        current_line = read_line(data_socket)
+        header_name, header_value = get_header_name_value(current_line)
+        if header_value == b'chunked':
+            is_chunked = True
+        if header_name == b'Content-Length':
+            content_length = header_value
+    return content_length, is_chunked
+
+
+def get_header_name_value(line):
+    name_value_split = line.decode().split(': ')
+    name = name_value_split[0].encode()
+    value = name_value_split[1].encode()
+    return name, value
 
 
 """BODY READING"""
-def parse_body(data_socket, is_chunked, content_length):
+def parse_body(data_socket, is_chunked=False, content_length=0):
     return
+
 
 """FILE WRITING"""
 def write_to_file(message, file_name):
