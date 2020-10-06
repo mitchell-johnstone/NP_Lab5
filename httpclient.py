@@ -120,12 +120,17 @@ def parse_message(data_socket, filename):
     status_code = -1
     #SECTION ABOVE RESERVED FOR THE GETTING THE STATUS CODE
     content_length = -1:
+    is_chunked = False
     while True:
         current_line = get_next_line(data_socket)
         header_name, header_value = get_header_name_value(current_line)
+        if header_value == b'chunked':
+            is_chunked = True
+        if header_name == b'Content-Length':
+            content_length = header_value
         if len(current_line) == 2:
             break
-    message = read_body(data_socket, content_length)
+    message = parse_body(data_socket, is_chunked, content_length)
     output_file = open(filename, 'wb')
     return status_code
     
@@ -176,7 +181,7 @@ def next_byte(data_socket):
 
 
 """BODY READING"""
-def parse_body(data_socket):
+def parse_body(data_socket, is_chunked, content_length):
     return
 
 """FILE WRITING"""
