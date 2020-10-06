@@ -107,6 +107,7 @@ def do_http_exchange(host, port, resource, file_name):
     request_line = b'GET ' + resource + b' HTTP/1.1\r\nHost: ' + host + b'\r\n\r\n'
     tcp_server.sendall(request_line)
 
+    status_code = parse_message(response.decode('ASCII'), "message_destination.txt")
     """
     Gotta do work here!
     Edit to make it run.
@@ -115,8 +116,6 @@ def do_http_exchange(host, port, resource, file_name):
  
     return parse_message(tcp_server, 'output_destination.txt')  # Replace this "server error" with the actual status code
 
-def ASCII_and_you_shall_receive_LOL():
-    return
 
 def parse_message(data_socket, filename):
     status_code = -1
@@ -136,6 +135,14 @@ def get_header_name_value(line):
     name = name_value_split[0].encode()
     value = name_value_split[1].encode()
     return name, value
+"""OVERALL MESSAGE HANDLING"""
+def parse_message(data_socket, filename):
+    # get the status code from status line
+    # read the header lines, check for content length or chunked data
+    # read the body
+    # write body to a file
+    return status
+
 
 def read_line(data_socket):
     """
@@ -151,15 +158,16 @@ def read_line(data_socket):
         if message[-2:] == b'\r\n':
             return message
 
+
 def next_byte(data_socket):
     """
     Read the next byte from the socket data_socket.
-   
+
     Read the next byte from the sender, received over the network.
     If the byte has not yet arrived, this method blocks (waits)
       until the byte arrives.
     If the sender is done sending and is waiting for your response, this method blocks indefinitely.
-   
+
     :param data_socket: The socket to read from. The data_socket argument should be an open tcp
                         data connection (either a client socket or a server data socket), not a tcp
                         server's listening socket.
@@ -168,6 +176,40 @@ def next_byte(data_socket):
     return data_socket.recv(1)
 
 
+"""STATUS LINE"""
+def parse_message(data_socket, filename):
+    status_code = -1
+    #SECTION ABOVE RESERVED FOR THE GETTING THE STATUS CODE
+
+    content_length = -1
+    while True:
+        current_line = read_line(data_socket)
+        if get_content_length(current_line) != -1:
+            content_length = get_content_length(current_line)
+        if len(current_line) == 2:
+            break
+    message = parse_body(data_socket, content_length)
+    output_file = open(filename, 'wb')
+    return status_code
+
+
+"""HEADER INTERPRETATION"""
+
+
+"""BODY READING"""
+def parse_body(data_socket):
+    return
+
+
+def get_content_length(line):
+    return -1
+
+
+"""FILE WRITING"""
+def write_to_file(message, file_name):
+    return
+
+    
 # Define additional functions here as necessary
 # Don't forget docstrings and :author: tags
 
