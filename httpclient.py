@@ -93,6 +93,20 @@ def do_http_exchange(host, port, resource, file_name):
     :rtype: int
     """
 
+    '''
+    response = make_request()
+        set up tcp socket (socket created here)
+        send message based on http request header
+        receive response
+        return response
+    parse_message(response, filename)
+        decode bytes following ascii header guidelines
+        parse_status_lines()
+        decode_chunked_response()
+
+        write to file
+    '''
+
     """
     Gotta do work here!
     Edit to make it run.
@@ -101,6 +115,10 @@ def do_http_exchange(host, port, resource, file_name):
  
     return 500  # Replace this "server error" with the actual status code
 
+def ASCII_and_you_shall_receive_LOL():
+    return
+def parse_message(response, filename):
+    pass
 # Define additional functions here as necessary
 # Don't forget docstrings and :author: tags
 
