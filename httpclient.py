@@ -102,7 +102,6 @@ def do_http_exchange(host, port, resource, file_name):
 
         write to file
     '''
-    status_code = parse_message_status_code(response.decode('ASCII'), "message_destination.txt")
     tcp_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     tcp_server.connect((host, port))
     request_line = b'GET ' + resource + b' HTTP/1.1\r\nHost: ' + host + b'\r\n\r\n'
@@ -114,27 +113,29 @@ def do_http_exchange(host, port, resource, file_name):
     function go brrrr.
     """
  
-    return status_code  # Replace this "server error" with the actual status code
+    return parse_message(tcp_server, 'output_destination.txt')  # Replace this "server error" with the actual status code
 
 def ASCII_and_you_shall_receive_LOL():
     return
 
-def parse_message_status_code(data_socket, filename):
+def parse_message(data_socket, filename):
     status_code = -1
     #SECTION ABOVE RESERVED FOR THE GETTING THE STATUS CODE
     content_length = -1:
     while True:
         current_line = get_next_line(data_socket)
-        if get_content_length(current_line) != -1:
-            content_length = get_content_length(current_line)
+        header_name, header_value = get_header_name_value(current_line)
         if len(current_line) == 2:
             break
     message = read_body(data_socket, content_length)
     output_file = open(filename, 'wb')
     return status_code
     
-def get_content_length(line):
-    return -1
+def get_header_name_value(line):
+    name_value_split = line.decode().split(': ')
+    name = name_value_split[0].encode()
+    value = name_value_split[1].encode()
+    return name, value
 
 def read_line(data_socket):
     """
@@ -167,8 +168,6 @@ def next_byte(data_socket):
     return data_socket.recv(1)
 
 
-def parse_message(response, filename):
-    pass
 # Define additional functions here as necessary
 # Don't forget docstrings and :author: tags
 
