@@ -121,7 +121,7 @@ def do_http_exchange(host, port, resource, file_name):
 def parse_message(data_socket, filename):
     status_code = -1
     #SECTION ABOVE RESERVED FOR THE GETTING THE STATUS CODE
-    content_length = -1:
+    content_length = -1
     is_chunked = False
     while True:
         current_line = get_next_line(data_socket)
