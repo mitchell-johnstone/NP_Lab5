@@ -106,21 +106,84 @@ def do_http_exchange(host, port, resource, file_name):
 
         write to file
     '''
-
+    status_code = parse_message_status_code(response.decode('ASCII'), "message_destination.txt")
     """
     Gotta do work here!
     Edit to make it run.
     function go brrrr
     """
  
-    return 500  # Replace this "server error" with the actual status code
+    return status_code  # Replace this "server error" with the actual status code
 
 def ASCII_and_you_shall_receive_LOL():
     return
-def parse_message(response, filename):
-    pass
+
+def parse_message_status_code(data_socket, filename):
+    status_code = -1
+    #SECTION ABOVE RESERVED FOR THE GETTING THE STATUS CODE
+    content_length = -1:
+    while True:
+        current_line = get_next_line(data_socket)
+        if get_content_length(current_line) != -1:
+            content_length = get_content_length(current_line)
+        if len(current_line) == 2:
+            break
+    message = read_body(data_socket, content_length)
+    output_file = open(filename, 'wb')
+    return status_code
+    
+def get_content_length(line):
+    return -1
+
+def read_line(data_socket):
+    """
+    Reads the next line of the message.
+    :param data_socket: the socket to read the message from (passed to next_byte method)
+    :return: The next line of the message, up to and including the '\n' character
+    :author: Jonathan Keane
+    """
+    message = b''
+    while True:
+        current_char = next_byte(data_socket)
+        message += current_char
+        if message[-2:] == b'\r\n':
+            return message
+
+def next_byte(data_socket):
+    """
+    Read the next byte from the socket data_socket.
+   
+    Read the next byte from the sender, received over the network.
+    If the byte has not yet arrived, this method blocks (waits)
+      until the byte arrives.
+    If the sender is done sending and is waiting for your response, this method blocks indefinitely.
+   
+    :param data_socket: The socket to read from. The data_socket argument should be an open tcp
+                        data connection (either a client socket or a server data socket), not a tcp
+                        server's listening socket.
+    :return: the next byte, as a bytes object with a single byte in it
+    """
+    return data_socket.recv(1)
+
 # Define additional functions here as necessary
 # Don't forget docstrings and :author: tags
 
+# message = 'This is a test\r\n\r\nI just want to see what happens'
+# parse_message(message, '')
 
-main()
+#------------------------------------------------------------------
+
+# main()
+
+#     response = b''
+
+#     get_next_line(data_socket)
+#     print(response.split('\r\n'))
+#     header = decode()
+#     for line in response.split('\r\n')[1:]:
+#         if line != '':
+
+#         else:
+#             break
+
+#     parse_chunked_response(data_socket)
