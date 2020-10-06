@@ -3,25 +3,22 @@
 - Fall 2020
 - Lab 5
 - Names:
-  - 
-  - 
+  - Jonny Keane
+  - Mitchell Johnstone
 
 A simple HTTP client
 
 Introduction: (Describe the lab in your own words)
-
-
+==================================================
 
 
 Summary: (Summarize your experience with the lab and what you learned)
+======================================================================
 
 
 Feedback: (Describe what you liked, what you disliked, and any suggestions
 you have for improvement) (required)
-
-
-
-
+==========================================================================
 
 """
 
@@ -30,7 +27,7 @@ you have for improvement) (required)
 import socket
 
 # import the "regular expressions" module
-import re
+import re # https://docs.python.org/3/library/re.html
 
 
 def main():
@@ -39,14 +36,13 @@ def main():
     """
 
     # These resource request should result in "Content-Length" data transfer
-    get_http_resource('http://www.httpvshttps.com/check.png', 'check.png')
+    #get_http_resource('http://www.httpvshttps.com/check.png', 'check.png')
 
     # this resource request should result in "chunked" data transfer
     get_http_resource('http://www.httpvshttps.com/','index.html')
     
     # If you find fun examples of chunked or Content-Length pages, please share
     # them with us!
-
 
 
 def get_http_resource(url, file_name):
@@ -106,17 +102,20 @@ def do_http_exchange(host, port, resource, file_name):
 
         write to file
     '''
+    tcp_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    tcp_server.connect((host, port))
+    request_line = b'GET ' + resource + b' HTTP/1.1\r\nHost: ' + host + b'\r\n\r\n'
+    tcp_server.sendall(request_line)
 
     """
     Gotta do work here!
     Edit to make it run.
-    function go brrrr
+    function go brrrr.
     """
  
     return 500  # Replace this "server error" with the actual status code
 
-def ASCII_and_you_shall_receive_LOL():
-    return
+
 def parse_message(response, filename):
     pass
 # Define additional functions here as necessary
