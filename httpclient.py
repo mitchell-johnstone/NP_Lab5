@@ -119,6 +119,10 @@ def do_http_exchange(host, port, resource, file_name):
 
 """OVERALL MESSAGE HANDLING"""
 def parse_message(data_socket, filename):
+    # get the status code from status line
+    # read the header lines, check for content length or chunked data
+    # read the body
+    # write body to a file
     return status
 
 
