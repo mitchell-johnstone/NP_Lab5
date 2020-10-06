@@ -116,7 +116,6 @@ def do_http_exchange(host, port, resource, file_name):
  
     return parse_message(tcp_server, 'output_destination.txt')  # Replace this "server error" with the actual status code
 
-
 def parse_message(data_socket, filename):
     status_code = -1
     #SECTION ABOVE RESERVED FOR THE GETTING THE STATUS CODE
@@ -136,13 +135,6 @@ def get_header_name_value(line):
     value = name_value_split[1].encode()
     return name, value
 """OVERALL MESSAGE HANDLING"""
-def parse_message(data_socket, filename):
-    # get the status code from status line
-    # read the header lines, check for content length or chunked data
-    # read the body
-    # write body to a file
-    return status
-
 
 def read_line(data_socket):
     """
@@ -177,20 +169,7 @@ def next_byte(data_socket):
 
 
 """STATUS LINE"""
-def parse_message(data_socket, filename):
-    status_code = -1
-    #SECTION ABOVE RESERVED FOR THE GETTING THE STATUS CODE
 
-    content_length = -1
-    while True:
-        current_line = read_line(data_socket)
-        if get_content_length(current_line) != -1:
-            content_length = get_content_length(current_line)
-        if len(current_line) == 2:
-            break
-    message = parse_body(data_socket, content_length)
-    output_file = open(filename, 'wb')
-    return status_code
 
 
 """HEADER INTERPRETATION"""
@@ -199,11 +178,6 @@ def parse_message(data_socket, filename):
 """BODY READING"""
 def parse_body(data_socket):
     return
-
-
-def get_content_length(line):
-    return -1
-
 
 """FILE WRITING"""
 def write_to_file(message, file_name):
