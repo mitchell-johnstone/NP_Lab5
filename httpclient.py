@@ -179,8 +179,8 @@ def read_headers(data_socket):
     """
     Should go through all the headers, checking if the body is
     chunked or length-oriented.
-    :param data_socket:
-    :return:
+    :param data_socket: the socket to read the message from (passed to next_byte method)
+    :return: the content length value and the whether the transfer encoding is chunked
     :author: Jonny Keane
     :editor: Mitchell Johnstone
     """
@@ -205,8 +205,51 @@ def get_header_name_value(line):
 
 """BODY READING"""
 def parse_body(data_socket, is_chunked=False, content_length=0):
-    return
+    """
+    Get the bytes that represent the message in the body
+    Excludes extra bytes if it is a chunked response
+    Otherwise, evaluates the body as one big piece based off of content length
+    :param data_socket: the socket to read the message from (passed to next_byte method)
+    :param is_chunked: whether the response is chunked or not
+        :default False: method has to specifically call the body chunked through the parameter to activate this 
+    :param content_length: the content length that will be used if the response is not chunked
+        :default 0: if the response is chunked, the default allows the method to be called without the extra parameter
+    :return: bytes object that represents the whole body message
+    :author: Jonny Keane
+    """
+    message = b''
+    if is_chunked:
+        current_chunk_size = get_chunk_size(read_line(data_socket))
+        while current_chunk_size:
+            message += get_chunk_payload(data_socket, current_chunk_size)
+            next_byte(data_socket) #CR
+            next_byte(data_socket) #LF
+            current_chunk_size = get_chunk_size(read_line(data_socket))
+    else:
+        message = get_payload(data_socket, content_length)
+    return message
 
+def get_chunk_size(bytes_): 
+    """
+    Clips off the last two bytes and cast as hexadecimal int
+    :param bytes_: the bytes that represent the chunk size with CR LF attached
+    :return: the decimal size of the chunk
+    :author: Jonny Keane
+    """
+    return int(bytes_[:-2], 16)
+
+def get_payload(data_socket, size):
+    """
+    Get a payload from the given data socket that has a length of size
+    :param data_socket: the socket to read the message from (passed to next_byte method)
+    :param size: the expected number of bytes in the payload
+    :return: a bytes object that contains the payload (ASCII characters)
+    :author: Jonny Keane
+    """
+    payload = b''
+    for i in range(0, size):
+        payload += next_byte(data_socket)
+    return payload
 
 """FILE WRITING"""
 def write_to_file(message, file_name):
@@ -215,23 +258,3 @@ def write_to_file(message, file_name):
     
 # Define additional functions here as necessary
 # Don't forget docstrings and :author: tags
-
-# message = 'This is a test\r\n\r\nI just want to see what happens'
-# parse_message(message, '')
-
-#------------------------------------------------------------------
-
-# main()
-
-#     response = b''
-
-#     get_next_line(data_socket)
-#     print(response.split('\r\n'))
-#     header = decode()
-#     for line in response.split('\r\n')[1:]:
-#         if line != '':
-
-#         else:
-#             break
-
-#     parse_chunked_response(data_socket)
