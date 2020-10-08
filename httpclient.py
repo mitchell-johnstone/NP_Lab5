@@ -185,24 +185,28 @@ def read_headers(data_socket):
     :author: Jonny Keane
     :editor: Mitchell Johnstone
     """
+    headers_dict = {}
     current_line = read_line(data_socket)
     is_chunked, content_length = False, -1
     while len(current_line) != 2:
         header_name, header_value = get_header_name_value(current_line)
-        if header_value == b'chunked':
-            is_chunked = True
-        if header_name == b'Content-Length':
-            content_length = int(header_value)
+        if header_name != None:
+            headers_dict[header_name] = header_value
         current_line = read_line(data_socket)
-    return content_length, is_chunked
+    print(headers_dict)
+    if b'Transfer-Encoding' in headers_dict.keys() and headers_dict[b'Transfer-Encoding'] == b'chunked':
+        return 0, True
+    return headers_dict[b'Content-Length'], False
 
 
 def get_header_name_value(line):
     name_value_split = line.decode()[:len(line)-2].split(': ')
-    print(name_value_split)
-    name = name_value_split[0].encode()
-    value = name_value_split[1].encode()
-    return name, value
+    if len(name_value_split) == 2:
+        name = name_value_split[0].encode()
+        value = name_value_split[1].encode()
+        return name, value
+    else:
+        return None, None
 
 
 """BODY READING"""
@@ -229,6 +233,7 @@ def parse_body(data_socket, is_chunked=False, content_length=0):
             current_chunk_size = get_chunk_size(read_line(data_socket))
     else:
         message = get_payload(data_socket, content_length)
+    print(message)
     return message
 
 def get_chunk_size(bytes_): 
