@@ -202,7 +202,6 @@ def read_headers(data_socket):
         if header_name != None:
             headers_dict[header_name] = header_value
         current_line = read_line(data_socket)
-    print(headers_dict)
     if b'Transfer-Encoding' in headers_dict.keys() and headers_dict[b'Transfer-Encoding'] == b'chunked':
         return 0, True
     return int(headers_dict[b'Content-Length']), False
