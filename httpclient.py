@@ -29,6 +29,7 @@ import socket
 # import the "regular expressions" module
 import re # https://docs.python.org/3/library/re.html
 
+
 def main():
     """
     Tests the client on a variety of resources
@@ -42,6 +43,7 @@ def main():
     
     # If you find fun examples of chunked or Content-Length pages, please share
     # them with us!
+
 
 def get_http_resource(url, file_name):
     """
@@ -71,6 +73,7 @@ def get_http_resource(url, file_name):
     else:
         print('get_http_resource: URL parse failed, request not sent')
 
+
 def do_http_exchange(host, port, resource, file_name):
     """
     Get an HTTP resource from a server
@@ -84,6 +87,7 @@ def do_http_exchange(host, port, resource, file_name):
            retrieved resource
     :return: the status code
     :rtype: int
+    :author: Mitchell Johnstone
     """
 
     '''
@@ -112,9 +116,20 @@ def do_http_exchange(host, port, resource, file_name):
  
     return parse_message(tcp_server, file_name)  # Replace this "server error" with the actual status code
 
+
+"""OVERALL MESSAGE HANDLING"""
 # Transfer-Encoding: chunked\r\n
 # Content-Length: 193\r\n
 def parse_message(data_socket, filename):
+    """
+    handle receiving and parsing the message. Gets the status code from the status line,
+    reads through the headers to determine if the message is chunked or not, and writes the payload
+    to the output file.
+    :param data_socket: the tcp socket from which to read the http response.
+    :param filename: the file to write the payload to.
+    :return: the status code of the http response.
+    :author: Mitchell Johnstone
+    """
 
     #getting the status code
     status_code = read_status_line(data_socket)
@@ -123,10 +138,10 @@ def parse_message(data_socket, filename):
     content_length, is_chunked = read_headers(data_socket)
 
     message = parse_body(data_socket, is_chunked, content_length)
-    output_file = open(filename, 'wb')
+    write_to_file(message, filename)
     return status_code
 
-"""OVERALL MESSAGE HANDLING"""
+
 def read_line(data_socket):
     """
     Reads the next line of the message.
@@ -139,6 +154,7 @@ def read_line(data_socket):
         current_char = next_byte(data_socket)
         message += current_char
     return message
+
 
 def next_byte(data_socket):
     """
@@ -156,6 +172,7 @@ def next_byte(data_socket):
     """
     return data_socket.recv(1)
 
+
 """STATUS LINE"""
 def read_status_line(data_socket):
     """
@@ -165,6 +182,7 @@ def read_status_line(data_socket):
     :author: Mitchell Johsntone
     """
     return int(read_line(data_socket).split(b' ')[1])
+
 
 """HEADER INTERPRETATION"""
 def read_headers(data_socket):
@@ -189,14 +207,21 @@ def read_headers(data_socket):
         return 0, True
     return headers_dict[b'Content-Length'], False
 
+
 def get_header_name_value(line):
+    """
+    reads the header and interprets the key and value.
+    :param line: a header from the http request, as a bytes literals
+    :return: a tuple (name, value) where name is the key of the header
+    and value is the value of the header, both bytes literals.
+    :author: Jonny Keane
+    :editor: Mitchell Johnstone
+    """
     name_value_split = line.decode()[:len(line)-2].split(': ')
-    if len(name_value_split) == 2:
-        name = name_value_split[0].encode()
-        value = name_value_split[1].encode()
-        return name, value
-    else:
-        return None, None
+    name = name_value_split[0].encode()
+    value = name_value_split[1].encode()
+    return name, value
+
 
 """BODY READING"""
 def parse_body(data_socket, is_chunked=False, content_length=0):
@@ -224,6 +249,7 @@ def parse_body(data_socket, is_chunked=False, content_length=0):
         message = get_payload(data_socket, content_length)
     return message
 
+
 def get_chunk_size(bytes_): 
     """
     Clips off the last two bytes and cast as hexadecimal int
@@ -232,6 +258,7 @@ def get_chunk_size(bytes_):
     :author: Jonny Keane
     """
     return int(bytes_[:-2], 16)
+
 
 def get_payload(data_socket, size):
     """
@@ -248,8 +275,16 @@ def get_payload(data_socket, size):
 
 """FILE WRITING"""
 def write_to_file(message, file_name):
-    pass
+    """
+    writes the given message to the given file
+    :param message: bytes literal of the payload of the http request
+    :param file_name: the file to write the message to
+    :author: Mitchell Johnstone
+    """
+    with open(file_name, "wb") as open_file:
+        open_file.write(message)
+    open_file.close()
 
-main()    
+main()
 # Define additional functions here as necessary
 # Don't forget docstrings and :author: tags
