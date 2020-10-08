@@ -199,6 +199,7 @@ def read_headers(data_socket):
 
 def get_header_name_value(line):
     name_value_split = line.decode()[:len(line)-2].split(': ')
+    print(name_value_split)
     name = name_value_split[0].encode()
     value = name_value_split[1].encode()
     return name, value
@@ -254,8 +255,8 @@ def get_payload(data_socket, size):
 
 """FILE WRITING"""
 def write_to_file(message, file_name):
-    return
+    pass
 
-    
+main()    
 # Define additional functions here as necessary
 # Don't forget docstrings and :author: tags
