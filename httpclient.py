@@ -185,15 +185,15 @@ def read_headers(data_socket):
     :author: Jonny Keane
     :editor: Mitchell Johnstone
     """
-    current_line = b''
+    current_line = read_line(data_socket)
     is_chunked, content_length = False, -1
     while len(current_line) != 2:
-        current_line = read_line(data_socket)
         header_name, header_value = get_header_name_value(current_line)
         if header_value == b'chunked':
             is_chunked = True
         if header_name == b'Content-Length':
             content_length = int(header_value)
+        current_line = read_line(data_socket)
     return content_length, is_chunked
 
 
