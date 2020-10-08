@@ -29,6 +29,8 @@ import socket
 # import the "regular expressions" module
 import re # https://docs.python.org/3/library/re.html
 
+import ssl
+
 
 def main():
     """
@@ -36,10 +38,10 @@ def main():
     """
 
     # These resource request should result in "Content-Length" data transfer
-    get_http_resource('http://www.httpvshttps.com/check.png', 'check.png')
+    get_http_resource('https://www.httpvshttps.com/check.png', 'check.png')
 
     # this resource request should result in "chunked" data transfer
-    get_http_resource('http://www.httpvshttps.com/','index.html')
+    get_http_resource('https://www.httpvshttps.com/','index.html')
     
     # If you find fun examples of chunked or Content-Length pages, please share
     # them with us!
@@ -57,24 +59,29 @@ def get_http_resource(url, file_name):
     """
 
     # Parse the URL into its component parts using a regular expression.
-    url_match = re.search('http://([^/:]*)(:\d*)?(/.*)', url)
+    secure = False
+    if url[:7] == 'http://':
+        url_match = re.search('http://([^/:]*)(:\d*)?(/.*)', url)
+    else:
+        url_match = re.search('https://([^/:]*)(:\d*)?(/.*)', url)
+        secure = True
     match_groups = url_match.groups() if url_match else []
     #    print 'match_groups=',match_groups
     if len(match_groups) == 3:
         host_name = match_groups[0]
-        host_port = int(match_groups[1][1:]) if match_groups[1] else 80
+        host_port = int(match_groups[1][1:]) if match_groups[1] else (443 if secure else 80)
         host_resource = match_groups[2]
         print('host name = {0}, port = {1}, resource = {2}'
               .format(host_name, host_port, host_resource))
         status_string = do_http_exchange(host_name.encode(), host_port,
-                                         host_resource.encode(), file_name)
+                                         host_resource.encode(), secure, file_name)
         print('get_http_resource: URL="{0}", status="{1}"'
               .format(url, status_string))
     else:
         print('get_http_resource: URL parse failed, request not sent')
 
 
-def do_http_exchange(host, port, resource, file_name):
+def do_http_exchange(host, port, resource, secure, file_name):
     """
     Get an HTTP resource from a server
 
@@ -103,8 +110,13 @@ def do_http_exchange(host, port, resource, file_name):
 
         write to file
     '''
+
     tcp_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     tcp_server.connect((host, port))
+
+    if secure:
+        context = ssl.create_default_context()
+        tcp_server = context.wrap_socket(tcp_server, server_hostname=host.decode())
     request_line = b'GET ' + resource + b' HTTP/1.1\r\nHost: ' + host + b'\r\n\r\n'
     tcp_server.sendall(request_line)
 
