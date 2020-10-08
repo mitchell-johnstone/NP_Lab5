@@ -167,11 +167,12 @@ def next_byte(data_socket):
 """STATUS LINE"""
 def read_status_line(data_socket):
     """
-
-    :param data_socket:
-    :return:
+    Reads the status line, returns back the status code
+    :param data_socket: socket to read response data from
+    :return: the status code
+    :author: Mitchell Johsntone
     """
-    return 200
+    return int(read_line(data_socket).split(b' ')[1])
 
 
 """HEADER INTERPRETATION"""
@@ -221,7 +222,7 @@ def parse_body(data_socket, is_chunked=False, content_length=0):
     if is_chunked:
         current_chunk_size = get_chunk_size(read_line(data_socket))
         while current_chunk_size:
-            message += get_chunk_payload(data_socket, current_chunk_size)
+            message += get_payload(data_socket, current_chunk_size)
             next_byte(data_socket) #CR
             next_byte(data_socket) #LF
             current_chunk_size = get_chunk_size(read_line(data_socket))
