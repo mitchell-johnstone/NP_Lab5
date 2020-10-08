@@ -36,7 +36,7 @@ def main():
     """
 
     # These resource request should result in "Content-Length" data transfer
-    #get_http_resource('http://www.httpvshttps.com/check.png', 'check.png')
+    get_http_resource('http://www.httpvshttps.com/check.png', 'check.png')
 
     # this resource request should result in "chunked" data transfer
     get_http_resource('http://www.httpvshttps.com/','index.html')
@@ -205,7 +205,7 @@ def read_headers(data_socket):
     print(headers_dict)
     if b'Transfer-Encoding' in headers_dict.keys() and headers_dict[b'Transfer-Encoding'] == b'chunked':
         return 0, True
-    return headers_dict[b'Content-Length'], False
+    return int(headers_dict[b'Content-Length']), False
 
 
 def get_header_name_value(line):
