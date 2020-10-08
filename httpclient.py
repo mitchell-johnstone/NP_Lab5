@@ -29,7 +29,6 @@ import socket
 # import the "regular expressions" module
 import re # https://docs.python.org/3/library/re.html
 
-
 def main():
     """
     Tests the client on a variety of resources
@@ -43,7 +42,6 @@ def main():
     
     # If you find fun examples of chunked or Content-Length pages, please share
     # them with us!
-
 
 def get_http_resource(url, file_name):
     """
@@ -72,7 +70,6 @@ def get_http_resource(url, file_name):
               .format(url, status_string))
     else:
         print('get_http_resource: URL parse failed, request not sent')
-
 
 def do_http_exchange(host, port, resource, file_name):
     """
@@ -115,7 +112,6 @@ def do_http_exchange(host, port, resource, file_name):
  
     return parse_message(tcp_server, file_name)  # Replace this "server error" with the actual status code
 
-
 # Transfer-Encoding: chunked\r\n
 # Content-Length: 193\r\n
 def parse_message(data_socket, filename):
@@ -130,8 +126,6 @@ def parse_message(data_socket, filename):
     output_file = open(filename, 'wb')
     return status_code
 
-
-
 """OVERALL MESSAGE HANDLING"""
 def read_line(data_socket):
     """
@@ -145,7 +139,6 @@ def read_line(data_socket):
         current_char = next_byte(data_socket)
         message += current_char
     return message
-
 
 def next_byte(data_socket):
     """
@@ -163,7 +156,6 @@ def next_byte(data_socket):
     """
     return data_socket.recv(1)
 
-
 """STATUS LINE"""
 def read_status_line(data_socket):
     """
@@ -173,7 +165,6 @@ def read_status_line(data_socket):
     :author: Mitchell Johsntone
     """
     return int(read_line(data_socket).split(b' ')[1])
-
 
 """HEADER INTERPRETATION"""
 def read_headers(data_socket):
@@ -198,7 +189,6 @@ def read_headers(data_socket):
         return 0, True
     return headers_dict[b'Content-Length'], False
 
-
 def get_header_name_value(line):
     name_value_split = line.decode()[:len(line)-2].split(': ')
     if len(name_value_split) == 2:
@@ -207,7 +197,6 @@ def get_header_name_value(line):
         return name, value
     else:
         return None, None
-
 
 """BODY READING"""
 def parse_body(data_socket, is_chunked=False, content_length=0):
@@ -233,7 +222,6 @@ def parse_body(data_socket, is_chunked=False, content_length=0):
             current_chunk_size = get_chunk_size(read_line(data_socket))
     else:
         message = get_payload(data_socket, content_length)
-    print(message)
     return message
 
 def get_chunk_size(bytes_): 
