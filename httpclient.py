@@ -14,11 +14,22 @@ Introduction: (Describe the lab in your own words)
 
 Summary: (Summarize your experience with the lab and what you learned)
 ======================================================================
+Through this lab, we struggled a bit in the beginning to organize the code in a way that
+flowed between the methods well. After a bit of tinkering and brainstorming, we realized
+the reading and parsing of the message had to be done concurrently, as the length of the
+message was indeterminate without parsing out the whole message. After reformatting some
+of the method functions, it was straightforward on how to split up tasks and recieve the
+response. We learned a lot about how http requests and responses are formatted in order
+to be sent and received properly, with the status line, headers, and body encoding.
 
 
 Feedback: (Describe what you liked, what you disliked, and any suggestions
 you have for improvement) (required)
 ==========================================================================
+Overall it was a fun exercise. I liked how this lab flowed well from the other TCP labs,
+as the HTML request was just sending a TCP message in a specific format. The explanation
+of the HTTPS could be better explained, because HTTP is explored in depth, but how to get
+from HTTP to HTTPS is a bit fuzzy, especially with the ssl wrapper and the specific port.
 
 """
 
@@ -41,7 +52,7 @@ def main():
     get_http_resource('https://www.httpvshttps.com/check.png', 'check.png')
 
     # this resource request should result in "chunked" data transfer
-    get_http_resource('https://www.httpvshttps.com/','index.html')
+    get_http_resource('https://milwaukee.craigslist.org/','index.html')
     
     # If you find fun examples of chunked or Content-Length pages, please share
     # them with us!
@@ -111,21 +122,19 @@ def do_http_exchange(host, port, resource, secure, file_name):
         write to file
     '''
 
+    # setting up the TCP Socket for sending and receiving http requests and responses.
     tcp_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     tcp_server.connect((host, port))
 
+    # Wrapping the socket in a ssl wrapper for https
     if secure:
         context = ssl.create_default_context()
         tcp_server = context.wrap_socket(tcp_server, server_hostname=host.decode())
+
+    # sending the http request
     request_line = b'GET ' + resource + b' HTTP/1.1\r\nHost: ' + host + b'\r\n\r\n'
     tcp_server.sendall(request_line)
 
-    """
-    Gotta do work here!
-    Edit to make it run.
-    function go brrrr.
-    """
- 
     return parse_message(tcp_server, file_name)  # Replace this "server error" with the actual status code
 
 
@@ -143,14 +152,19 @@ def parse_message(data_socket, filename):
     :author: Mitchell Johnstone
     """
 
-    #getting the status code
+    # Get the status code
     status_code = read_status_line(data_socket)
 
+    print(status_code)
     # Reading through the headers, getting vital information
     content_length, is_chunked = read_headers(data_socket)
 
+    # Read the message, based off the encoding from the headers
     message = parse_body(data_socket, is_chunked, content_length)
+
+    # write the interpreted message to a file.
     write_to_file(message, filename)
+
     return status_code
 
 
@@ -212,6 +226,7 @@ def read_headers(data_socket):
         header_name, header_value = get_header_name_value(current_line)
         headers_dict[header_name] = header_value
         current_line = read_line(data_socket)
+    print(headers_dict)
     if b'Transfer-Encoding' in headers_dict.keys() and headers_dict[b'Transfer-Encoding'] == b'chunked':
         return 0, True
     return int(headers_dict[b'Content-Length']), False
@@ -224,7 +239,6 @@ def get_header_name_value(line):
     :return: a tuple (name, value) where name is the key of the header
     and value is the value of the header, both bytes literals.
     :author: Jonny Keane
-    :editor: Mitchell Johnstone
     """
     name_value_split = line.decode()[:len(line)-2].split(': ')
     name = name_value_split[0].encode()
@@ -294,6 +308,5 @@ def write_to_file(message, file_name):
         open_file.write(message)
     open_file.close()
 
+
 main()
-# Define additional functions here as necessary
-# Don't forget docstrings and :author: tags

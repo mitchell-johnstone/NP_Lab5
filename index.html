@@ -1,903 +1,867 @@
-<!--
-	Created November 2014
-	chris@anthum.com
-	www.anthum.com
--->
-<html>
+<!DOCTYPE html>
+<html class="no-js">
 <head>
-	 
-	<script src="https://www.httpvshttps.com/check-server.js"></script>
-	
-	<script>
-		function log(o) {if (console) console.log(o);}
-		var proto = window.location.protocol;
-		proto = proto.substring(0,proto.length-1);
-		function setActiveMenu() {
-			if ('http' == proto) {
-				document.getElementById('menu-http').className += ' active';
-			} else if ('https' == proto) {
-				document.getElementById('menu-https').className += ' active';
-			}
-		}
-	</script>
 
-	<script> 
-		 
-		if (!window.supportsLatestHTTPS) {
-			document.getElementsByTagName('html')[0].className+= ' unsupported-browser';
-		} 		var start = Date.now();
-		var elapsedMs;
-	</script>
-	<meta charset="utf-8">
-	<title>HTTP vs HTTPS — Test them both yourself</title>
-	<meta name="theme-color" content="#1ac222">
-	<meta id="ip-address" name="ip" content="155.92.2.2" />
-	<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta property="og:site_name" content="craigslist">
+	<meta name="twitter:card" content="preview">
+	<meta property="og:url" content="https://milwaukee.craigslist.org/">
+	<link rel="canonical" href="https://milwaukee.craigslist.org/">
 
-	<meta content="summary" name="twitter:card" />
-
-	<meta name="descripton" content="Encrypted websites protect our privacy and are significantly faster.
-			Run this test and prepare to be amazed. ">
-	<meta name="twitter:description" content="Encrypted websites protect our privacy and are significantly faster. Run this test and be amazed. #HttpsEverywhere">
-
-	<meta property="og:description" content="Encrypted websites protect our privacy and are significantly faster. Run this test and prepare to be amazed. #HttpsEverywhere">
-
-	<meta property="og:url" content="http://www.httpvshttps.com/">
-	<meta name="twitter:url" content="http://www.httpvshttps.com/">
-
-	<meta content="https://www.httpvshttps.com/https-icon-192.png" name="twitter:image" />
-	<meta property="og:image" content="http://www.httpvshttps.com/https-icon-share.png">
-	<link rel="icon" sizes="192x192" href="https-icon-192.png">
-
-	<meta property="og:title" content="HTTP vs HTTPS Test">
-	<meta name="twitter:title" content="HTTP vs HTTPS">
-
-	<!--meta property="og:site_name" content="HTTP vs HTTPS"-->
-	<meta property="og:type" content="website">
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+<title>craigslist: milwaukee, WI jobs, apartments, for sale, services, community, and events</title>
+<meta name="description" content="craigslist provides local classifieds and forums for jobs, housing, for sale, services, local community, and events">
+<meta name="google-site-verification" content="Ie0Do80edB2EurJYj-bxqMdX7zkMjx_FnjtQp_XMFio">
+<meta name="msvalidate.01" content="3402AB8563AB1E080501C21306FE7811" />
+<meta name="ICBM" content="43.038898, -87.906403">
+<link type="text/css" rel="stylesheet" media="all" href="//www.craigslist.org/styles/cl.css?v=9100bd643974b9e546434e60a287a082">
+<link type="text/css" rel="stylesheet" media="all" href="//www.craigslist.org/styles/homepage.css?v=dd30e1a0f165ca48330c9f25d9e2e5c9">
+<link type="text/css" rel="stylesheet" media="all" href="//www.craigslist.org/styles/jquery-ui-clcustom.css?v=3b05ddffb7c7f5b62066deff2dda9339">
+<link rel="prefetch" href="//www.craigslist.org/js/search-concat.min.js?v=ee1fb1d8a0a690186653873c330375e8">
 </head>
-<body>
-	<style>
-		* {
-			box-sizing: border-box;
-		}
-		#try-again img {
-			margin-top: 2em;
-			width: 40%;
-		}
-		#try-again {
-			text-align: center;
-			color: #c00;
-		}
-		body,html {
-			padding: 0;
-			margin: 0;
-			-webkit-font-smoothing: antialiased;
-			text-rendering: optimizeLegibility;
-		}
-	 	body {
-	 		font-family: "Open Sans", sans-serif;
-	 		/*font-family: "Roboto", sans-serif;*/
-	 		font-weight: 300;
-	 		background: #fff;
-			color: #404040;
-	 		max-width: 860px;
-	 		margin: 0 auto;
-	 		padding: 0 .5em;
-	 	}
-	 	strong {
-	 		font-weight: 700;
-	 	}
-		a {
-			color: blue;
-			text-decoration: none;
-		}
-		p {
-			line-height: 1.4em;
-			margin: 0;
-		}
-	 	.images {
-	 		margin: 0 auto 2rem auto;
-	 		text-align: center;
-	 		overflow: hidden;
-	 	}
-		.images img {
-			width: 20px;
-			height: 20px;
-			background: #eee;
-/*			background: #0b0;
-			background: #B00;
-*/			border-radius: 50%;
-			margin: 0;
-			padding: 0;
-		}
-		.images span {
-			padding : .1em;
-			float: left;
-			line-height: 20px;	
-			cursor: default;
-			border-radius: 50%;
-
-		}
-
-		#status {
-			padding: 0 0 1em 0;
-			border-bottom: 2px solid #eaeaea;
-			margin-bottom: 1em;
-			text-align: center;
-			overflow: hidden;
-		}
-		#time {
-			color: orange;
-			font-weight: bold;
-		}
-		.loaded #time {
-			color: #0b0;
-		}
-		.load, #compared {
-			text-align: center;
-		}
-		#compared {
-			color: #666;
-			/*font-weight: bold;*/
-			font-size: 120%;
-			font-weight: 400;
-			opacity: 0;
-			margin-top: .2em;
-			transition: all .3s ease-out;
-			transform: translateY(1em);
-		}
-		.loaded #compared {
-			opacity: 1;
-			transform: translateY(0em);
-		}
-		.loaded.slower #compared {
-			color: #b00;
-		}
-		.loaded.faster #compared {
-			color: #0b0;
-		}
-
-		.buttons {
-			display: inline-block;
-			margin: 1rem 0 0 0;
-		}
-		.buttons div {
-			display: inline-block;
-			padding: 0 .5em;
-			white-space: nowrap;
-		}
-		.buttons a {
-			display: inline-block;
-			padding: .5rem .2rem;
-		}
-		.buttons div.active {
-			border-bottom: 4px solid blue;
-		}
-		sub,sup {
-			position: relative;
-			font-size: 65%;
-			line-height: 0;
-			vertical-align: baseline;
-			display: inline-block;
-			color: #666;
-			left: .25em;
-
-		}
-		sub {
-			bottom: -.25em;
-			left: .1em;
-		}
-		sup {
-			top: -.50em;
-		}
-		footer {
-			padding: 3em 0;
-			margin: 2em 0 0 0;
-			text-align: center;
-			overflow: hidden;
-		}
-		.author {
-			margin-top: 2em;
-		}
-		.author a {
-			padding: 1rem .5rem 1rem .5rem;
-		}
-		.desc {
-			text-align: left;
-		}
-		.desc br {
-			display: none;
-		}
-		.load {
-			margin: 1rem 0 0 0;
-			font-size: 2.5rem;
-		}
-		h1 {
-			margin: 1rem 0 0 0;
-			font-size: 2rem;
-			font-weight: 300;
-			/*line-height: 1.5em;*/
-			padding:0;
-		}
-		h1 img {
-			height: 24px;
-			margin-right: 1em;
-		}
-		h2 {
-			margin: 1rem 0 1rem 0;
-			font-size: 1.25rem;
-			font-weight: 600;
-			line-height: 1.5em;
-		}
-		h1,h2, .desc p {
-			text-align: center;
-		}
-		.notice {
-			color: #c00;
-			font-size: 80%;
-			display: none;
-		}
-		#unsupported {
-			display: none;
-			background: url(warning.png) no-repeat 1em 1em #fcc;
-			background-size: 47px 50px;
-			border-bottom: 2px solid #F00;
-			margin: 0 -.5em;
-			padding: .5em .5em .5em 6em;
-			font-size: 80%;
-			min-height: 6em;
-		}
-		.unsupported-browser #unsupported {
-			display: block;
-		}
-		.shares {
-			height: 1rem;
-			margin-bottom: 5rem;
-		}
-		.share-box {
-			display: inline-block;
-			width: 7rem;
-		}
-		.share-box {
-			display: inline-block;
-			width: 30%;
-		}
-		.servers {
-			margin: 3rem auto 0 auto;
-			line-height: 1.5em;
-			max-width: 18rem;
-		}
-		footer p.sup {
-			text-align: left;
-			margin-top: 1em;
-		}
-		footer p.sup strong {
-			font-weight: 600;
-		}
-		.sup sup {
-			left: 0;
-			margin: 0 1em 0 2em;
-			font-weight: 600;
-		}
-		.le {
-			font-size: .75rem;
-			margin-top: 3rem;
-		}
-		.le-logo {
-			display: block;
-			margin-bottom: .5em;
-		}
-
-		.desktop {
-			display: none;
-		}
-
-		@media (min-width : 768px) {
-			.buttons {
-				display: inline-block;
-				margin: 0;
-			}
-			span.desktop {
-				display: inline;
-			}
-			footer p.sup {
-				text-align: left;
-				margin: 0;
-			}
-			.sup {
-				font-size: 1rem;
-			}
-			#unsupported {
-				font-size: 100%;
-				margin: 0;
-				padding: 1rem 1rem 1rem 5rem;
-				min-height: 0;
-			}
-			.images span {
-				padding : .25rem;
-				float: left;
-				margin: 0;
-				line-height: 20px;
-				text-align: center;
-			}
-
-			#try-again img {
-				margin-top: 2em;
-				width: 20%;
-			}
-
-			p {
-				line-height: 1.6em;
-			}
-			#status {
-				margin-bottom: 2em;
-			}
-			.desc {
-				float: left;
-				width: 68%;
-			}
-			.desc br {
-				display: block;
-			}
-			.right {
-				width: 30%;
-				margin: 1em 0;
-				float: right;
-				/*text-align: right;*/
-			}
-			footer {
-				color: #666;
-				margin: 2em 0 2em 0;
-				font-size: .7rem;
-			}
-			.servers {
-				margin-top: 4rem;
-			}
-
-			h2 {
-				margin: 1rem 0 0rem 0;
-				font-size: 1rem;
-				font-weight: 600;
-				line-height: 1.5em;
-			}
-			h1,h2, .desc p {
-				text-align: left;
-			}
-
-		}
-		.lock {
-			margin: 0 .3em;
-			fill: blue;
-		}
-	</style>
-	
-	 
-        <header class="nocontent" id="unsupported">
-                Your browser does not support HTTP2, and test results will be inaccurate. Please use the latest version
-                of <a href="https://www.google.com/chrome/">Chrome</a> or <a href="https://www.firefox.com">Firefox</a>. 
-                (<a href="http://caniuse.com/#search=http2">List of supported browsers</a>).
-        </header>
-	 
-
-         
-
-		<div id="status">
-		<div class="desc">
-			<h1>HTTP vs HTTPS Test</h1>
-			<h2>Encrypted Websites Protect Our Privacy and are Significantly Faster</h2>
-			<p>				
-				Compare load times of the unsecure HTTP and encrypted HTTPS versions of this page.
-				Each test loads 360 unique, non-cached images <span style="white-space: nowrap;">(0.62 MB</span> total).
-				<span class="desktop">For fastest results, run each test 2-3 times in a private/incognito browsing session.</span>
-			</p>
-		</div>
-		<div class="right">
-			<span class="buttons">
-				<div id="menu-http"><a href="http://www.httpvshttps.com/">HTTP</a></div>
-				<div id="menu-https"><a href="https://www.httpvshttps.com/"><svg class="lock" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="52 115 508 556" enable-background="new 0 0 0 0" width="11" height="12"><path d="M231.336,351.324h142.596V288.9v-0.612c0-9.792-1.938-18.972-5.812-27.54s-9.078-16.014-15.606-22.338 c-6.526-6.324-14.075-11.322-22.644-14.994s-17.748-5.508-27.54-5.508s-18.972,1.836-27.54,5.508s-16.116,8.772-22.644,15.3 c-6.528,6.528-11.628,14.076-15.3,22.644c-3.672,8.568-5.508,17.748-5.508,27.54L231.336,351.324L231.336,351.324z M540.396,351.324 c5.304,0,9.791,1.836,13.464,5.508c3.672,3.672,5.508,8.16,5.508,13.464v281.521c0,5.304-1.836,9.792-5.508,13.464 c-3.673,3.672-8.16,5.508-13.464,5.508H71.604c-5.304,0-9.792-1.836-13.464-5.508c-3.672-3.672-5.508-8.16-5.508-13.464V370.295 c0-5.304,1.836-9.792,5.508-13.464c3.672-3.672,8.16-5.508,13.464-5.508h26.928h31.212V288.9c0-23.664,4.59-46.104,13.77-67.32 c9.18-21.216,21.522-39.576,37.026-55.08s33.762-27.846,54.774-37.026c21.012-9.18,43.35-13.77,67.014-13.77 s46.104,4.59,67.32,13.77c21.216,9.18,39.574,21.522,55.078,37.026c15.506,15.504,27.848,33.864,37.026,55.08 s13.771,43.656,13.771,67.32v0.612v61.812h37.942H540.396L540.396,351.324z"></path></svg>HTTPS</a></div>
-			</span>
-					<div class="load"><span id="time" will-change>0.000 s</span></div>
-			<div id="compared" will-change>&nbsp;</div>
-				</div>
-	</div>
-
-	<script>
-		setActiveMenu();
-
-		
-		// run the clock and stop when all the images load
-		var timeEl = document.getElementById('time');
-		var statusEl = document.getElementById('status');
-		var clockUpdate;
-
-		function setElapsedTimeDisplay() {
-			elapsedMs = (Date.now()-start);
-			timeEl.firstChild.data = (elapsedMs/1000).toFixed(3)+' s';
-		}
-
-		clockUpdate = window.setInterval(function() {
-			setElapsedTimeDisplay();
-		}, 17);
-		window.onload = function() {
-			log("window.onload complete");
-			setElapsedTimeDisplay();
-			clearInterval(clockUpdate);
-			statusEl.className += ' loaded';
-
-			var lastResults = {};
-			try {
-				lastResults = JSON.parse(atob(document.cookie.replace(/(?:(?:^|.*;\s*)lastResults\s*\=\s*([^;]*).*$)|^.*$/, "$1")));
-			} catch (e) {}
-
-			if (!lastResults.id) {
-				lastResults.id = Date.now();
-				lastResults.ip = document.getElementById('ip-address').getAttribute('content');
-			}
+<body class="homepage en">
+<script type="text/javascript"><!--
+    function C(k){return(document.cookie.match('(^|; )'+k+'=([^;]*)')||0)[2]}
+    var pagetype, pagemode;
+    (function(){
+        var h = document.documentElement;
+        h.className = h.className.replace('no-js', 'js');
+        var b = document.body;
+        var bodyClassList = b.className.split(/\s+/);;
+        pagetype = bodyClassList[0]; // dangerous assumption
+        var fmt = C('cl_fmt');
+        if ( fmt === 'regular' || fmt === 'mobile' ) {
+            pagemode = fmt;
+        } else if (screen.width <= 480) {
+            pagemode = 'mobile';
+        } else {
+            pagemode = 'regular';
+        }
+        pagemode = pagemode === 'mobile' ? 'mobile' : 'desktop';
+        bodyClassList.push(pagemode);
+        if (C('hidesearch') === '1' && pagemode !== 'mobile') {
+            bodyClassList.push('hide-search');
+        }
+        var width = window.innerWidth || document.documentElement.clientWidth;
+        if (width > 1000) { bodyClassList.push('w1024'); }
+        if (typeof window.sectionBase !== 'undefined') {
+            var mode = (decodeURIComponent(C('cl_tocmode') || '').match(new RegExp(window.sectionBase + ':([^,]+)', 'i')) || {})[1] || window.defaultView;
+            if (mode) {
+                bodyClassList.push(mode);
+            }
+        }
+        b.className = bodyClassList.join(' ');
+    }());
+--></script>
 
 
-			var lastMs = -1;
-			if (lastResults.http && proto == 'https') {
-				lastMs = lastResults.http;
-			} else if (lastResults.https && proto == 'http') {
-				lastMs = lastResults.https;
-			}
+<div class="wrapper">
+    <section class="page-container" class="has-vote-banner">
+        <div class="bglogo"></div>
+        <div class="tryapp">
+    try the craigslist app &raquo;
+    <a class="appstorebtn"
+    href="https://play.google.com/store/apps/details?id=org.craigslist.CraigslistMobile">
+        Android
+    </a>
+    <a class="appstorebtn"
+    href="https://apps.apple.com/us/app/craigslist/id1336642410">
+        iOS
+    </a>
+</div>
+<header class="global-header wide">
+   <a class="header-logo" name="logoLink" href="/">CL</a>
 
-			var otherProto = (proto == 'http')? "HTTPS" : "HTTP";
+    <nav class="breadcrumbs-container">
 
-			var newClass = ' no-compare';
-			var compareText = 'Done! Please try '+otherProto+'.';
-			if (lastMs> 0) {
-				var diffMs = lastMs - elapsedMs;
-				var pct = Math.abs(Math.round(diffMs/lastMs*100));
-				newClass = ' faster';
-				if (diffMs == 0) {
-					return; // tie;
-				} else if (diffMs < 0) {
-					newClass = ' slower';
-				}
-				compareText = pct+'% '+newClass+' than '+otherProto;
-			}
-			statusEl.className += newClass;
-			document.getElementById('compared').innerHTML = compareText;
+<ul class="breadcrumbs">
+        <li class="crumb area">
+            <p>
+                    <a href="/">milwaukee</a>
 
-			lastResults[proto] = elapsedMs;
-			lastResults.proto = proto;
-			var lastResultsString = JSON.stringify(lastResults);
-			document.cookie = 'lastResults='+btoa(lastResultsString)+'; path=/; max-age=120';
-			// log(lastResultsString);
+            </p>
+        </li>
 
 
-			log("loading external sharing scripts...");
 
-			// GA
-			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			m=s.getElementsByTagName(o)[0];a.async=0;a.src=g;m.parentNode.insertBefore(a,m);
-			a.onload=function() {log('google-analytics loaded.')};
-			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-			ga('create', 'UA-50610215-2');
-			ga('require', 'displayfeatures');
-			ga('send', 'pageview');			
-			ga('send', 'event', 'httpvshttps.com', 'load-ms', lastResults.id+":"+proto, elapsedMs);
-			ga('send', 'event', 'httpvshttps.com', 'load-data', lastResultsString);
 
-			// Twitter Share
-			!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+</ul>
+    </nav>
 
-			// facebook share
-			(function(d, s, id) {
-			  var js, fjs = d.getElementsByTagName(s)[0];
-			  if (d.getElementById(id)) return;
-			  js = d.createElement(s); js.id = id;
-			  js.onload=function() {log('facebook sharing loaded.')};
-			  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=103234283101202&version=v2.0";
-			  fjs.parentNode.insertBefore(js, fjs);
-			}(document, 'script', 'facebook-jssdk'));
+<div class="userlinks">
+    <ul class="user-actions">
+        <li class="user post">
+            <a href="https://post.craigslist.org/c/mil">post</a>
+        </li>
+        <li class="user account">
+            <a href="https://accounts.craigslist.org/login/home">account</a>
+        </li>
+    </ul>
+    <ul class="user-favs-discards">
+        <li class="user">
+            <div class="favorites">
+                <a href="#" class="favlink"><span class="icon icon-star fav" aria-hidden="true"></span><span class="fav-number"></span><span class="fav-label"> favorites</span></a>
+            </div>
+        </li>
+        <li class="user discards">
+            <form class="unfavform js-only" method="GET" action="/favorites">
+              <div class="to-banish-page">
+                <input type="hidden" class="unfaves" name="fl">
+                <input type="hidden" name="uf" value="1">
+                <a href="#" class="to-banish-page-link">
+                  <span class="icon icon-trash red" aria-hidden="true"></span>
+                  <span class="banished_count"></span>
+                  <span class="discards-label"> hidden</span>
+                </a>
+              </div>
+          </form>
+        </li>
+    </ul>
+</div>
 
-			// Google+ Share
-			(function() {
-				var s = document.createElement('script');
-				s.src='https://apis.google.com/js/platform.js';
-				s.onload=function() {log('google+ sharing loaded.')};
-				document.getElementsByTagName('head')[0].appendChild(s);
-			})();
-		}
-	</script>
-	<div class="images" > 
-		<span><img src="check.png?16021879795737_1" /></a></span> 
-		<span><img src="check.png?16021879795737_2" /></a></span> 
-		<span><img src="check.png?16021879795737_3" /></a></span> 
-		<span><img src="check.png?16021879795737_4" /></a></span> 
-		<span><img src="check.png?16021879795737_5" /></a></span> 
-		<span><img src="check.png?16021879795737_6" /></a></span> 
-		<span><img src="check.png?16021879795737_7" /></a></span> 
-		<span><img src="check.png?16021879795737_8" /></a></span> 
-		<span><img src="check.png?16021879795737_9" /></a></span> 
-		<span><img src="check.png?16021879795737_10" /></a></span> 
-		<span><img src="check.png?16021879795737_11" /></a></span> 
-		<span><img src="check.png?16021879795737_12" /></a></span> 
-		<span><img src="check.png?16021879795737_13" /></a></span> 
-		<span><img src="check.png?16021879795737_14" /></a></span> 
-		<span><img src="check.png?16021879795737_15" /></a></span> 
-		<span><img src="check.png?16021879795737_16" /></a></span> 
-		<span><img src="check.png?16021879795737_17" /></a></span> 
-		<span><img src="check.png?16021879795737_18" /></a></span> 
-		<span><img src="check.png?16021879795737_19" /></a></span> 
-		<span><img src="check.png?16021879795737_20" /></a></span> 
-		<span><img src="check.png?16021879795737_21" /></a></span> 
-		<span><img src="check.png?16021879795737_22" /></a></span> 
-		<span><img src="check.png?16021879795737_23" /></a></span> 
-		<span><img src="check.png?16021879795737_24" /></a></span> 
-		<span><img src="check.png?16021879795737_25" /></a></span> 
-		<span><img src="check.png?16021879795737_26" /></a></span> 
-		<span><img src="check.png?16021879795737_27" /></a></span> 
-		<span><img src="check.png?16021879795737_28" /></a></span> 
-		<span><img src="check.png?16021879795737_29" /></a></span> 
-		<span><img src="check.png?16021879795737_30" /></a></span> 
-		<span><img src="check.png?16021879795737_31" /></a></span> 
-		<span><img src="check.png?16021879795737_32" /></a></span> 
-		<span><img src="check.png?16021879795737_33" /></a></span> 
-		<span><img src="check.png?16021879795737_34" /></a></span> 
-		<span><img src="check.png?16021879795737_35" /></a></span> 
-		<span><img src="check.png?16021879795737_36" /></a></span> 
-		<span><img src="check.png?16021879795737_37" /></a></span> 
-		<span><img src="check.png?16021879795737_38" /></a></span> 
-		<span><img src="check.png?16021879795737_39" /></a></span> 
-		<span><img src="check.png?16021879795737_40" /></a></span> 
-		<span><img src="check.png?16021879795737_41" /></a></span> 
-		<span><img src="check.png?16021879795737_42" /></a></span> 
-		<span><img src="check.png?16021879795737_43" /></a></span> 
-		<span><img src="check.png?16021879795737_44" /></a></span> 
-		<span><img src="check.png?16021879795737_45" /></a></span> 
-		<span><img src="check.png?16021879795737_46" /></a></span> 
-		<span><img src="check.png?16021879795737_47" /></a></span> 
-		<span><img src="check.png?16021879795737_48" /></a></span> 
-		<span><img src="check.png?16021879795737_49" /></a></span> 
-		<span><img src="check.png?16021879795737_50" /></a></span> 
-		<span><img src="check.png?16021879795737_51" /></a></span> 
-		<span><img src="check.png?16021879795737_52" /></a></span> 
-		<span><img src="check.png?16021879795737_53" /></a></span> 
-		<span><img src="check.png?16021879795737_54" /></a></span> 
-		<span><img src="check.png?16021879795737_55" /></a></span> 
-		<span><img src="check.png?16021879795737_56" /></a></span> 
-		<span><img src="check.png?16021879795737_57" /></a></span> 
-		<span><img src="check.png?16021879795737_58" /></a></span> 
-		<span><img src="check.png?16021879795737_59" /></a></span> 
-		<span><img src="check.png?16021879795737_60" /></a></span> 
-		<span><img src="check.png?16021879795737_61" /></a></span> 
-		<span><img src="check.png?16021879795737_62" /></a></span> 
-		<span><img src="check.png?16021879795737_63" /></a></span> 
-		<span><img src="check.png?16021879795737_64" /></a></span> 
-		<span><img src="check.png?16021879795737_65" /></a></span> 
-		<span><img src="check.png?16021879795737_66" /></a></span> 
-		<span><img src="check.png?16021879795737_67" /></a></span> 
-		<span><img src="check.png?16021879795737_68" /></a></span> 
-		<span><img src="check.png?16021879795737_69" /></a></span> 
-		<span><img src="check.png?16021879795737_70" /></a></span> 
-		<span><img src="check.png?16021879795737_71" /></a></span> 
-		<span><img src="check.png?16021879795737_72" /></a></span> 
-		<span><img src="check.png?16021879795737_73" /></a></span> 
-		<span><img src="check.png?16021879795737_74" /></a></span> 
-		<span><img src="check.png?16021879795737_75" /></a></span> 
-		<span><img src="check.png?16021879795737_76" /></a></span> 
-		<span><img src="check.png?16021879795737_77" /></a></span> 
-		<span><img src="check.png?16021879795737_78" /></a></span> 
-		<span><img src="check.png?16021879795737_79" /></a></span> 
-		<span><img src="check.png?16021879795737_80" /></a></span> 
-		<span><img src="check.png?16021879795737_81" /></a></span> 
-		<span><img src="check.png?16021879795737_82" /></a></span> 
-		<span><img src="check.png?16021879795737_83" /></a></span> 
-		<span><img src="check.png?16021879795737_84" /></a></span> 
-		<span><img src="check.png?16021879795737_85" /></a></span> 
-		<span><img src="check.png?16021879795737_86" /></a></span> 
-		<span><img src="check.png?16021879795737_87" /></a></span> 
-		<span><img src="check.png?16021879795737_88" /></a></span> 
-		<span><img src="check.png?16021879795737_89" /></a></span> 
-		<span><img src="check.png?16021879795737_90" /></a></span> 
-		<span><img src="check.png?16021879795737_91" /></a></span> 
-		<span><img src="check.png?16021879795737_92" /></a></span> 
-		<span><img src="check.png?16021879795737_93" /></a></span> 
-		<span><img src="check.png?16021879795737_94" /></a></span> 
-		<span><img src="check.png?16021879795737_95" /></a></span> 
-		<span><img src="check.png?16021879795737_96" /></a></span> 
-		<span><img src="check.png?16021879795737_97" /></a></span> 
-		<span><img src="check.png?16021879795737_98" /></a></span> 
-		<span><img src="check.png?16021879795737_99" /></a></span> 
-		<span><img src="check.png?16021879795737_100" /></a></span> 
-		<span><img src="check.png?16021879795737_101" /></a></span> 
-		<span><img src="check.png?16021879795737_102" /></a></span> 
-		<span><img src="check.png?16021879795737_103" /></a></span> 
-		<span><img src="check.png?16021879795737_104" /></a></span> 
-		<span><img src="check.png?16021879795737_105" /></a></span> 
-		<span><img src="check.png?16021879795737_106" /></a></span> 
-		<span><img src="check.png?16021879795737_107" /></a></span> 
-		<span><img src="check.png?16021879795737_108" /></a></span> 
-		<span><img src="check.png?16021879795737_109" /></a></span> 
-		<span><img src="check.png?16021879795737_110" /></a></span> 
-		<span><img src="check.png?16021879795737_111" /></a></span> 
-		<span><img src="check.png?16021879795737_112" /></a></span> 
-		<span><img src="check.png?16021879795737_113" /></a></span> 
-		<span><img src="check.png?16021879795737_114" /></a></span> 
-		<span><img src="check.png?16021879795737_115" /></a></span> 
-		<span><img src="check.png?16021879795737_116" /></a></span> 
-		<span><img src="check.png?16021879795737_117" /></a></span> 
-		<span><img src="check.png?16021879795737_118" /></a></span> 
-		<span><img src="check.png?16021879795737_119" /></a></span> 
-		<span><img src="check.png?16021879795737_120" /></a></span> 
-		<span><img src="check.png?16021879795737_121" /></a></span> 
-		<span><img src="check.png?16021879795737_122" /></a></span> 
-		<span><img src="check.png?16021879795737_123" /></a></span> 
-		<span><img src="check.png?16021879795737_124" /></a></span> 
-		<span><img src="check.png?16021879795737_125" /></a></span> 
-		<span><img src="check.png?16021879795737_126" /></a></span> 
-		<span><img src="check.png?16021879795737_127" /></a></span> 
-		<span><img src="check.png?16021879795737_128" /></a></span> 
-		<span><img src="check.png?16021879795737_129" /></a></span> 
-		<span><img src="check.png?16021879795737_130" /></a></span> 
-		<span><img src="check.png?16021879795737_131" /></a></span> 
-		<span><img src="check.png?16021879795737_132" /></a></span> 
-		<span><img src="check.png?16021879795737_133" /></a></span> 
-		<span><img src="check.png?16021879795737_134" /></a></span> 
-		<span><img src="check.png?16021879795737_135" /></a></span> 
-		<span><img src="check.png?16021879795737_136" /></a></span> 
-		<span><img src="check.png?16021879795737_137" /></a></span> 
-		<span><img src="check.png?16021879795737_138" /></a></span> 
-		<span><img src="check.png?16021879795737_139" /></a></span> 
-		<span><img src="check.png?16021879795737_140" /></a></span> 
-		<span><img src="check.png?16021879795737_141" /></a></span> 
-		<span><img src="check.png?16021879795737_142" /></a></span> 
-		<span><img src="check.png?16021879795737_143" /></a></span> 
-		<span><img src="check.png?16021879795737_144" /></a></span> 
-		<span><img src="check.png?16021879795737_145" /></a></span> 
-		<span><img src="check.png?16021879795737_146" /></a></span> 
-		<span><img src="check.png?16021879795737_147" /></a></span> 
-		<span><img src="check.png?16021879795737_148" /></a></span> 
-		<span><img src="check.png?16021879795737_149" /></a></span> 
-		<span><img src="check.png?16021879795737_150" /></a></span> 
-		<span><img src="check.png?16021879795737_151" /></a></span> 
-		<span><img src="check.png?16021879795737_152" /></a></span> 
-		<span><img src="check.png?16021879795737_153" /></a></span> 
-		<span><img src="check.png?16021879795737_154" /></a></span> 
-		<span><img src="check.png?16021879795737_155" /></a></span> 
-		<span><img src="check.png?16021879795737_156" /></a></span> 
-		<span><img src="check.png?16021879795737_157" /></a></span> 
-		<span><img src="check.png?16021879795737_158" /></a></span> 
-		<span><img src="check.png?16021879795737_159" /></a></span> 
-		<span><img src="check.png?16021879795737_160" /></a></span> 
-		<span><img src="check.png?16021879795737_161" /></a></span> 
-		<span><img src="check.png?16021879795737_162" /></a></span> 
-		<span><img src="check.png?16021879795737_163" /></a></span> 
-		<span><img src="check.png?16021879795737_164" /></a></span> 
-		<span><img src="check.png?16021879795737_165" /></a></span> 
-		<span><img src="check.png?16021879795737_166" /></a></span> 
-		<span><img src="check.png?16021879795737_167" /></a></span> 
-		<span><img src="check.png?16021879795737_168" /></a></span> 
-		<span><img src="check.png?16021879795737_169" /></a></span> 
-		<span><img src="check.png?16021879795737_170" /></a></span> 
-		<span><img src="check.png?16021879795737_171" /></a></span> 
-		<span><img src="check.png?16021879795737_172" /></a></span> 
-		<span><img src="check.png?16021879795737_173" /></a></span> 
-		<span><img src="check.png?16021879795737_174" /></a></span> 
-		<span><img src="check.png?16021879795737_175" /></a></span> 
-		<span><img src="check.png?16021879795737_176" /></a></span> 
-		<span><img src="check.png?16021879795737_177" /></a></span> 
-		<span><img src="check.png?16021879795737_178" /></a></span> 
-		<span><img src="check.png?16021879795737_179" /></a></span> 
-		<span><img src="check.png?16021879795737_180" /></a></span> 
-		<span><img src="check.png?16021879795737_181" /></a></span> 
-		<span><img src="check.png?16021879795737_182" /></a></span> 
-		<span><img src="check.png?16021879795737_183" /></a></span> 
-		<span><img src="check.png?16021879795737_184" /></a></span> 
-		<span><img src="check.png?16021879795737_185" /></a></span> 
-		<span><img src="check.png?16021879795737_186" /></a></span> 
-		<span><img src="check.png?16021879795737_187" /></a></span> 
-		<span><img src="check.png?16021879795737_188" /></a></span> 
-		<span><img src="check.png?16021879795737_189" /></a></span> 
-		<span><img src="check.png?16021879795737_190" /></a></span> 
-		<span><img src="check.png?16021879795737_191" /></a></span> 
-		<span><img src="check.png?16021879795737_192" /></a></span> 
-		<span><img src="check.png?16021879795737_193" /></a></span> 
-		<span><img src="check.png?16021879795737_194" /></a></span> 
-		<span><img src="check.png?16021879795737_195" /></a></span> 
-		<span><img src="check.png?16021879795737_196" /></a></span> 
-		<span><img src="check.png?16021879795737_197" /></a></span> 
-		<span><img src="check.png?16021879795737_198" /></a></span> 
-		<span><img src="check.png?16021879795737_199" /></a></span> 
-		<span><img src="check.png?16021879795737_200" /></a></span> 
-		<span><img src="check.png?16021879795737_201" /></a></span> 
-		<span><img src="check.png?16021879795737_202" /></a></span> 
-		<span><img src="check.png?16021879795737_203" /></a></span> 
-		<span><img src="check.png?16021879795737_204" /></a></span> 
-		<span><img src="check.png?16021879795737_205" /></a></span> 
-		<span><img src="check.png?16021879795737_206" /></a></span> 
-		<span><img src="check.png?16021879795737_207" /></a></span> 
-		<span><img src="check.png?16021879795737_208" /></a></span> 
-		<span><img src="check.png?16021879795737_209" /></a></span> 
-		<span><img src="check.png?16021879795737_210" /></a></span> 
-		<span><img src="check.png?16021879795737_211" /></a></span> 
-		<span><img src="check.png?16021879795737_212" /></a></span> 
-		<span><img src="check.png?16021879795737_213" /></a></span> 
-		<span><img src="check.png?16021879795737_214" /></a></span> 
-		<span><img src="check.png?16021879795737_215" /></a></span> 
-		<span><img src="check.png?16021879795737_216" /></a></span> 
-		<span><img src="check.png?16021879795737_217" /></a></span> 
-		<span><img src="check.png?16021879795737_218" /></a></span> 
-		<span><img src="check.png?16021879795737_219" /></a></span> 
-		<span><img src="check.png?16021879795737_220" /></a></span> 
-		<span><img src="check.png?16021879795737_221" /></a></span> 
-		<span><img src="check.png?16021879795737_222" /></a></span> 
-		<span><img src="check.png?16021879795737_223" /></a></span> 
-		<span><img src="check.png?16021879795737_224" /></a></span> 
-		<span><img src="check.png?16021879795737_225" /></a></span> 
-		<span><img src="check.png?16021879795737_226" /></a></span> 
-		<span><img src="check.png?16021879795737_227" /></a></span> 
-		<span><img src="check.png?16021879795737_228" /></a></span> 
-		<span><img src="check.png?16021879795737_229" /></a></span> 
-		<span><img src="check.png?16021879795737_230" /></a></span> 
-		<span><img src="check.png?16021879795737_231" /></a></span> 
-		<span><img src="check.png?16021879795737_232" /></a></span> 
-		<span><img src="check.png?16021879795737_233" /></a></span> 
-		<span><img src="check.png?16021879795737_234" /></a></span> 
-		<span><img src="check.png?16021879795737_235" /></a></span> 
-		<span><img src="check.png?16021879795737_236" /></a></span> 
-		<span><img src="check.png?16021879795737_237" /></a></span> 
-		<span><img src="check.png?16021879795737_238" /></a></span> 
-		<span><img src="check.png?16021879795737_239" /></a></span> 
-		<span><img src="check.png?16021879795737_240" /></a></span> 
-		<span><img src="check.png?16021879795737_241" /></a></span> 
-		<span><img src="check.png?16021879795737_242" /></a></span> 
-		<span><img src="check.png?16021879795737_243" /></a></span> 
-		<span><img src="check.png?16021879795737_244" /></a></span> 
-		<span><img src="check.png?16021879795737_245" /></a></span> 
-		<span><img src="check.png?16021879795737_246" /></a></span> 
-		<span><img src="check.png?16021879795737_247" /></a></span> 
-		<span><img src="check.png?16021879795737_248" /></a></span> 
-		<span><img src="check.png?16021879795737_249" /></a></span> 
-		<span><img src="check.png?16021879795737_250" /></a></span> 
-		<span><img src="check.png?16021879795737_251" /></a></span> 
-		<span><img src="check.png?16021879795737_252" /></a></span> 
-		<span><img src="check.png?16021879795737_253" /></a></span> 
-		<span><img src="check.png?16021879795737_254" /></a></span> 
-		<span><img src="check.png?16021879795737_255" /></a></span> 
-		<span><img src="check.png?16021879795737_256" /></a></span> 
-		<span><img src="check.png?16021879795737_257" /></a></span> 
-		<span><img src="check.png?16021879795737_258" /></a></span> 
-		<span><img src="check.png?16021879795737_259" /></a></span> 
-		<span><img src="check.png?16021879795737_260" /></a></span> 
-		<span><img src="check.png?16021879795737_261" /></a></span> 
-		<span><img src="check.png?16021879795737_262" /></a></span> 
-		<span><img src="check.png?16021879795737_263" /></a></span> 
-		<span><img src="check.png?16021879795737_264" /></a></span> 
-		<span><img src="check.png?16021879795737_265" /></a></span> 
-		<span><img src="check.png?16021879795737_266" /></a></span> 
-		<span><img src="check.png?16021879795737_267" /></a></span> 
-		<span><img src="check.png?16021879795737_268" /></a></span> 
-		<span><img src="check.png?16021879795737_269" /></a></span> 
-		<span><img src="check.png?16021879795737_270" /></a></span> 
-		<span><img src="check.png?16021879795737_271" /></a></span> 
-		<span><img src="check.png?16021879795737_272" /></a></span> 
-		<span><img src="check.png?16021879795737_273" /></a></span> 
-		<span><img src="check.png?16021879795737_274" /></a></span> 
-		<span><img src="check.png?16021879795737_275" /></a></span> 
-		<span><img src="check.png?16021879795737_276" /></a></span> 
-		<span><img src="check.png?16021879795737_277" /></a></span> 
-		<span><img src="check.png?16021879795737_278" /></a></span> 
-		<span><img src="check.png?16021879795737_279" /></a></span> 
-		<span><img src="check.png?16021879795737_280" /></a></span> 
-		<span><img src="check.png?16021879795737_281" /></a></span> 
-		<span><img src="check.png?16021879795737_282" /></a></span> 
-		<span><img src="check.png?16021879795737_283" /></a></span> 
-		<span><img src="check.png?16021879795737_284" /></a></span> 
-		<span><img src="check.png?16021879795737_285" /></a></span> 
-		<span><img src="check.png?16021879795737_286" /></a></span> 
-		<span><img src="check.png?16021879795737_287" /></a></span> 
-		<span><img src="check.png?16021879795737_288" /></a></span> 
-		<span><img src="check.png?16021879795737_289" /></a></span> 
-		<span><img src="check.png?16021879795737_290" /></a></span> 
-		<span><img src="check.png?16021879795737_291" /></a></span> 
-		<span><img src="check.png?16021879795737_292" /></a></span> 
-		<span><img src="check.png?16021879795737_293" /></a></span> 
-		<span><img src="check.png?16021879795737_294" /></a></span> 
-		<span><img src="check.png?16021879795737_295" /></a></span> 
-		<span><img src="check.png?16021879795737_296" /></a></span> 
-		<span><img src="check.png?16021879795737_297" /></a></span> 
-		<span><img src="check.png?16021879795737_298" /></a></span> 
-		<span><img src="check.png?16021879795737_299" /></a></span> 
-		<span><img src="check.png?16021879795737_300" /></a></span> 
-		<span><img src="check.png?16021879795737_301" /></a></span> 
-		<span><img src="check.png?16021879795737_302" /></a></span> 
-		<span><img src="check.png?16021879795737_303" /></a></span> 
-		<span><img src="check.png?16021879795737_304" /></a></span> 
-		<span><img src="check.png?16021879795737_305" /></a></span> 
-		<span><img src="check.png?16021879795737_306" /></a></span> 
-		<span><img src="check.png?16021879795737_307" /></a></span> 
-		<span><img src="check.png?16021879795737_308" /></a></span> 
-		<span><img src="check.png?16021879795737_309" /></a></span> 
-		<span><img src="check.png?16021879795737_310" /></a></span> 
-		<span><img src="check.png?16021879795737_311" /></a></span> 
-		<span><img src="check.png?16021879795737_312" /></a></span> 
-		<span><img src="check.png?16021879795737_313" /></a></span> 
-		<span><img src="check.png?16021879795737_314" /></a></span> 
-		<span><img src="check.png?16021879795737_315" /></a></span> 
-		<span><img src="check.png?16021879795737_316" /></a></span> 
-		<span><img src="check.png?16021879795737_317" /></a></span> 
-		<span><img src="check.png?16021879795737_318" /></a></span> 
-		<span><img src="check.png?16021879795737_319" /></a></span> 
-		<span><img src="check.png?16021879795737_320" /></a></span> 
-		<span><img src="check.png?16021879795737_321" /></a></span> 
-		<span><img src="check.png?16021879795737_322" /></a></span> 
-		<span><img src="check.png?16021879795737_323" /></a></span> 
-		<span><img src="check.png?16021879795737_324" /></a></span> 
-		<span><img src="check.png?16021879795737_325" /></a></span> 
-		<span><img src="check.png?16021879795737_326" /></a></span> 
-		<span><img src="check.png?16021879795737_327" /></a></span> 
-		<span><img src="check.png?16021879795737_328" /></a></span> 
-		<span><img src="check.png?16021879795737_329" /></a></span> 
-		<span><img src="check.png?16021879795737_330" /></a></span> 
-		<span><img src="check.png?16021879795737_331" /></a></span> 
-		<span><img src="check.png?16021879795737_332" /></a></span> 
-		<span><img src="check.png?16021879795737_333" /></a></span> 
-		<span><img src="check.png?16021879795737_334" /></a></span> 
-		<span><img src="check.png?16021879795737_335" /></a></span> 
-		<span><img src="check.png?16021879795737_336" /></a></span> 
-		<span><img src="check.png?16021879795737_337" /></a></span> 
-		<span><img src="check.png?16021879795737_338" /></a></span> 
-		<span><img src="check.png?16021879795737_339" /></a></span> 
-		<span><img src="check.png?16021879795737_340" /></a></span> 
-		<span><img src="check.png?16021879795737_341" /></a></span> 
-		<span><img src="check.png?16021879795737_342" /></a></span> 
-		<span><img src="check.png?16021879795737_343" /></a></span> 
-		<span><img src="check.png?16021879795737_344" /></a></span> 
-		<span><img src="check.png?16021879795737_345" /></a></span> 
-		<span><img src="check.png?16021879795737_346" /></a></span> 
-		<span><img src="check.png?16021879795737_347" /></a></span> 
-		<span><img src="check.png?16021879795737_348" /></a></span> 
-		<span><img src="check.png?16021879795737_349" /></a></span> 
-		<span><img src="check.png?16021879795737_350" /></a></span> 
-		<span><img src="check.png?16021879795737_351" /></a></span> 
-		<span><img src="check.png?16021879795737_352" /></a></span> 
-		<span><img src="check.png?16021879795737_353" /></a></span> 
-		<span><img src="check.png?16021879795737_354" /></a></span> 
-		<span><img src="check.png?16021879795737_355" /></a></span> 
-		<span><img src="check.png?16021879795737_356" /></a></span> 
-		<span><img src="check.png?16021879795737_357" /></a></span> 
-		<span><img src="check.png?16021879795737_358" /></a></span> 
-		<span><img src="check.png?16021879795737_359" /></a></span> 
-		<span><img src="check.png?16021879795737_360" /></a></span>	</div>
-	<footer>
-		<div class="shares">
-			<div class="share-box">
-				<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.httpvshttps.com" data-text="Encrypted websites protect our privacy and are significantly faster. Run this test and be amazed. #HttpsEverywhere"></a>
-			</div>
-			<div class="share-box">
-				<div class="fb-share-button" data-href="http://www.httpvshttps.com/" data-layout="button_count"></div>
-			</div>
-			<div class="share-box">
-				<g:plusone size="medium" width="200" align="right" href="http://www.httpvshttps.com/"></g:plusone>
-			</div>
-		</div>
+</header>
+<header class="global-header narrow">
+   <a class="header-logo" href="/">CL</a>
+    <nav class="breadcrumbs-container">
 
-		<p class="sup">
-			Only full, end-end encryption ensures complete privacy. <a href="https://bit.ly/cf-ssl">Cloudflare</a> and <a href="https://bit.ly/max-cdn">MaxCDN</a> SSL encryption services compromise privacy by using
-			<a href="https://bit.ly/https-compromise">interceptive middle proxy servers</a>.
-			HTTPS means &quot;Secure HTTP&quot;. Plaintext HTTP/1.1 is compared against encrypted
-                        <a href="https://http2.github.io/">HTTP/2</a> HTTPS on a non-caching, nginx server with a direct, non-proxied connection.
-		</p>
-		<p class="le">
-			<a class="le-logo" href="https://letsencrypt.org/"><img src="letsencrypt-logo-horizontal.svg" width="200" height="48" /></a>
-			Free TLS Certificate provided by <a href="https://letsencrypt.org/">Let's Encrypt</a>.
-		</p>
+<h1 class="breadcrumbs">
 
-		<div class="servers">
-			Server location: <a href="servers.png">Dallas, USA</a>. Contact me below if you're getting slow results from Europe or Japan.
-		</div>
+milwaukee
+</h1>
 
-		<div class="author">
-			©2014-2020<a href="https://www.anthum.com/me">Anthum™</a>
-			<a href="https://twitter.com/AnthumChris">@AnthumChris</a>
-		</div>
-	</footer>
-	<div id="fb-root"></div>
+
+    </nav>
+    <span class="linklike show-wide-header">...</span>
+</header>
+
+        <nav id="topban" class="regular">
+            <div class="regular-area">
+                <h2 class="area">milwaukee, WI</h2>
+                
+            </div>
+            <div class="enter-area">
+                <input type="text" class="subarea-input flatinput"
+                    data-autocomplete="subarea" value="">
+            </div>
+            <div class="custom-area no-name ">
+                <div class="radius-info">
+                    within <span class="distance"></span> mi of <span class="postal"></span>
+                </div>
+                <div class="exit-subarea">&times;</div>
+            </div>
+        </nav>
+       <div id="leftbar">
+            <h1 id="logo">
+    <a href="https://www.craigslist.org/about/sites">craigslist</a>
+</h1>
+
+<ul id="postlks">
+    <li><a id="post" href="https://post.craigslist.org/c/mil">create a posting</a></li>
+    <li><a href="https://accounts.craigslist.org/login/home">my account</a></li>
+</ul>
+
+<form id="search" class="homepage-search" action="/search/" method="GET">
+    <input type="hidden" name="sort" value="rel">
+    <input type="hidden" name="ordinal" id="ordinal" value="1">
+    <input type="hidden" name="ratio" id="ratio" value="0">
+    <input type="hidden" name="clicked" id="clicked" value="0">
+    <input id="query" class="querybox flatinput" name="query" data-autocomplete="search-count" autocorrect="off" autocapitalize="off" placeholder="search craigslist" autofocus="autofocus">
+    <select id="catAbb" name="catAbb" class="homepage-category-picker">
+        <option value="" selected="selected">select category</option>
+        <option value="ccc">community</option>
+        <option value="eee">events</option>
+        <option value="ggg">gigs</option>
+        <option value="hhh">housing</option>
+        <option value="jjj">jobs</option>
+        <option value="rrr">resumes</option>
+        <option value="sss">for sale</option>
+        <option value="bbb">services</option>
+    </select>
+    <button type="submit" id="go" class="searchbtn"><span class="icon icon-search"><span class="screen-reader-text">search craigslist</span></span></button>
+</form>
+
+<div>
+    <h4 id="calban"><a href="/d/events-classes/search/eee">event calendar</a></h4>
+    <table class="cal">
+    <tr class="days">
+            <th>M</th>
+            <th>T</th>
+            <th>W</th>
+            <th>T</th>
+            <th>F</th>
+            <th>S</th>
+            <th>S</th>
+    </tr>
+        <tr>
+                <td class="">12</td>
+                <td class="today "><a href="//milwaukee.craigslist.org/d/events-classes/search/eee?sale_date=2020-10-13">13</a></td>
+                <td class=""><a href="//milwaukee.craigslist.org/d/events-classes/search/eee?sale_date=2020-10-14">14</a></td>
+                <td class=""><a href="//milwaukee.craigslist.org/d/events-classes/search/eee?sale_date=2020-10-15">15</a></td>
+                <td class=""><a href="//milwaukee.craigslist.org/d/events-classes/search/eee?sale_date=2020-10-16">16</a></td>
+                <td class=""><a href="//milwaukee.craigslist.org/d/events-classes/search/eee?sale_date=2020-10-17">17</a></td>
+                <td class=""><a href="//milwaukee.craigslist.org/d/events-classes/search/eee?sale_date=2020-10-18">18</a></td>
+        </tr>
+        <tr>
+                <td class=""><a href="//milwaukee.craigslist.org/d/events-classes/search/eee?sale_date=2020-10-19">19</a></td>
+                <td class=""><a href="//milwaukee.craigslist.org/d/events-classes/search/eee?sale_date=2020-10-20">20</a></td>
+                <td class=""><a href="//milwaukee.craigslist.org/d/events-classes/search/eee?sale_date=2020-10-21">21</a></td>
+                <td class=""><a href="//milwaukee.craigslist.org/d/events-classes/search/eee?sale_date=2020-10-22">22</a></td>
+                <td class=""><a href="//milwaukee.craigslist.org/d/events-classes/search/eee?sale_date=2020-10-23">23</a></td>
+                <td class=""><a href="//milwaukee.craigslist.org/d/events-classes/search/eee?sale_date=2020-10-24">24</a></td>
+                <td class=""><a href="//milwaukee.craigslist.org/d/events-classes/search/eee?sale_date=2020-10-25">25</a></td>
+        </tr>
+        <tr>
+                <td class=""><a href="//milwaukee.craigslist.org/d/events-classes/search/eee?sale_date=2020-10-26">26</a></td>
+                <td class=""><a href="//milwaukee.craigslist.org/d/events-classes/search/eee?sale_date=2020-10-27">27</a></td>
+                <td class=""><a href="//milwaukee.craigslist.org/d/events-classes/search/eee?sale_date=2020-10-28">28</a></td>
+                <td class=""><a href="//milwaukee.craigslist.org/d/events-classes/search/eee?sale_date=2020-10-29">29</a></td>
+                <td class=""><a href="//milwaukee.craigslist.org/d/events-classes/search/eee?sale_date=2020-10-30">30</a></td>
+                <td class=""><a href="//milwaukee.craigslist.org/d/events-classes/search/eee?sale_date=2020-10-31">31</a></td>
+                <td class=""><a href="//milwaukee.craigslist.org/d/events-classes/search/eee?sale_date=2020-11-01">1</a></td>
+        </tr>
+        <tr>
+                <td class=""><a href="//milwaukee.craigslist.org/d/events-classes/search/eee?sale_date=2020-11-02">2</a></td>
+                <td class=""><a href="//milwaukee.craigslist.org/d/events-classes/search/eee?sale_date=2020-11-03">3</a></td>
+                <td class=""><a href="//milwaukee.craigslist.org/d/events-classes/search/eee?sale_date=2020-11-04">4</a></td>
+                <td class=""><a href="//milwaukee.craigslist.org/d/events-classes/search/eee?sale_date=2020-11-05">5</a></td>
+                <td class=""><a href="//milwaukee.craigslist.org/d/events-classes/search/eee?sale_date=2020-11-06">6</a></td>
+                <td class=""><a href="//milwaukee.craigslist.org/d/events-classes/search/eee?sale_date=2020-11-07">7</a></td>
+                <td class=""><a href="//milwaukee.craigslist.org/d/events-classes/search/eee?sale_date=2020-11-08">8</a></td>
+        </tr>
+</table>
+
+</div>
+
+<ul class="leftlinks" id="user_resources">
+    
+    
+        <li><a href="https://www.craigslist.org/about/craigslist_app">craigslist app<sup class="neu">new</sup></a></li>
+    <li><a href="https://www.craigslist.org/about/help/">help, faq, abuse, legal</a></li>
+    <li><a href="https://www.craigslist.org/about/scams">avoid scams &amp; fraud</a></li>
+    <li><a href="https://www.craigslist.org/about/safety">personal safety tips</a></li>
+    <li><a href="https://www.craigslist.org/about/terms.of.use">terms of use</a></li>
+    <li><a href="https://www.craigslist.org/about/privacy.policy">privacy policy<sup class="neu">new</sup></a></li>
+    <li><a href="https://www.craigslist.org/about/help/system-status">system status</a></li>
+</ul>
+
+<ul class="leftlinks" id="about_craigslist">
+    <li><a href="https://www.craigslist.org/about/">about craigslist</a></li>
+    <li><a href="https://www.craigslist.org/about/open_source">craigslist open source</a></li>
+    <li><a href="http://blog.craigslist.org/">craigslist blog</a></li>
+    <li><a href="https://www.craigslist.org/about/best/all/">best-of-craigslist</a></li>
+
+    <li><a href="http://www.craigslistjoe.com/">"craigslist joe"</a></li>
+    <li><a href="https://craignewmarkphilanthropies.org/">craig newmark<br>philanthropies</a></li>
+</ul>
+
+
+        </div>
+        <div id="center">
+            <h2 class="vote-banner alert alert-md alert-info desktop">Election Day is Tuesday, 11/3. <a href="https://www.vote.org">Find your polling place</a> and vote!</h2>
+            <h2 class="vote-banner alert alert-md alert-info mobile">Election Day is 11/3: <a href="https://www.vote.org">Vote</a></h2>
+            <div class="community">
+                
+        <div id="ccc" class="col">
+        <h3 class="ban"><a href="/d/community/search/ccc" class="ccc" data-alltitle="all community" data-cat="ccc"><span class="txt">community<sup class="c"></sup></span></a></h3>
+        <div class="cats">
+        <ul id="ccc0" class="left">
+<li><a href="/d/activity-partners/search/act" class="act" data-cat="act"><span class="txt">activities<sup class="c"></sup></span></a></li>
+<li><a href="/d/artists/search/ats" class="ats" data-cat="ats"><span class="txt">artists<sup class="c"></sup></span></a></li>
+<li><a href="/d/childcare/search/kid" class="kid" data-cat="kid"><span class="txt">childcare<sup class="c"></sup></span></a></li>
+<li><a href="/d/classes/search/cls" class="cls" data-cat="cls"><span class="txt">classes<sup class="c"></sup></span></a></li>
+<li><a href="/d/events/search/eve" class="eve" data-cat="eve"><span class="txt">events<sup class="c"></sup></span></a></li>
+<li><a href="/d/general-community/search/com" class="com" data-cat="com"><span class="txt">general<sup class="c"></sup></span></a></li>
+<li><a href="/d/groups/search/grp" class="grp" data-cat="grp"><span class="txt">groups<sup class="c"></sup></span></a></li>
+<li><a href="/d/local-news-and-views/search/vnn" class="vnn" data-cat="vnn"><span class="txt">local&nbsp;news<sup class="c"></sup></span></a></li>
+</ul>
+<ul id="ccc1" class="mc">
+<li><a href="/d/lost-found/search/laf" class="laf" data-cat="laf"><span class="txt">lost+found<sup class="c"></sup></span></a></li>
+<li><a href="/d/missed-connections/search/mis" class="mis" data-cat="mis"><span class="txt">missed connections<sup class="c"></sup></span></a></li>
+<li><a href="/d/musicians/search/muc" class="muc" data-cat="muc"><span class="txt">musicians<sup class="c"></sup></span></a></li>
+<li><a href="/d/pets/search/pet" class="pet" data-cat="pet"><span class="txt">pets<sup class="c"></sup></span></a></li>
+<li><a href="/d/politics/search/pol" class="pol" data-cat="pol"><span class="txt">politics<sup class="c"></sup></span></a></li>
+<li><a href="/d/rants-raves/search/rnr" class="rnr" data-cat="rnr"><span class="txt">rants &amp; raves<sup class="c"></sup></span></a></li>
+<li><a href="/d/rideshare/search/rid" class="rid" data-cat="rid"><span class="txt">rideshare<sup class="c"></sup></span></a></li>
+<li><a href="/d/volunteers/search/vol" class="vol" data-cat="vol"><span class="txt">volunteers<sup class="c"></sup></span></a></li>
+</ul>
+</div>
+</div>
+
+                
+        <div id="bbb" class="col">
+        <h3 class="ban"><a href="/d/services/search/bbb" class="bbb" data-alltitle="all services" data-cat="bbb"><span class="txt">services<sup class="c"></sup></span></a></h3>
+        <div class="cats">
+        <ul id="bbb0" class="left">
+<li><a href="/d/automotive-services/search/aos" class="aos" data-cat="aos"><span class="txt">automotive<sup class="c"></sup></span></a></li>
+<li><a href="/d/beauty-services/search/bts" class="bts" data-cat="bts"><span class="txt">beauty<sup class="c"></sup></span></a></li>
+<li><a href="/d/cell-phone-mobile-services/search/cms" class="cms" data-cat="cms"><span class="txt">cell/mobile<sup class="c"></sup></span></a></li>
+<li><a href="/d/computer-services/search/cps" class="cps" data-cat="cps"><span class="txt">computer<sup class="c"></sup></span></a></li>
+<li><a href="/d/creative-services/search/crs" class="crs" data-cat="crs"><span class="txt">creative<sup class="c"></sup></span></a></li>
+<li><a href="/d/cycle-services/search/cys" class="cys" data-cat="cys"><span class="txt">cycle<sup class="c"></sup></span></a></li>
+<li><a href="/d/event-services/search/evs" class="evs" data-cat="evs"><span class="txt">event<sup class="c"></sup></span></a></li>
+<li><a href="/d/farm-garden-services/search/fgs" class="fgs" data-cat="fgs"><span class="txt">farm+garden<sup class="c"></sup></span></a></li>
+<li><a href="/d/financial-services/search/fns" class="fns" data-cat="fns"><span class="txt">financial<sup class="c"></sup></span></a></li>
+<li><a href="/d/household-services/search/hss" class="hss" data-cat="hss"><span class="txt">household<sup class="c"></sup></span></a></li>
+</ul>
+<ul id="bbb1" class="mc">
+<li><a href="/d/labor-hauling-moving/search/lbs" class="lbs" data-cat="lbs"><span class="txt">labor/move<sup class="c"></sup></span></a></li>
+<li><a href="/d/legal-services/search/lgs" class="lgs" data-cat="lgs"><span class="txt">legal<sup class="c"></sup></span></a></li>
+<li><a href="/d/lessons-tutoring/search/lss" class="lss" data-cat="lss"><span class="txt">lessons<sup class="c"></sup></span></a></li>
+<li><a href="/d/marine-services/search/mas" class="mas" data-cat="mas"><span class="txt">marine<sup class="c"></sup></span></a></li>
+<li><a href="/d/pet-services/search/pas" class="pas" data-cat="pas"><span class="txt">pet<sup class="c"></sup></span></a></li>
+<li><a href="/d/real-estate-services/search/rts" class="rts" data-cat="rts"><span class="txt">real estate<sup class="c"></sup></span></a></li>
+<li><a href="/d/skilled-trade-services/search/sks" class="sks" data-cat="sks"><span class="txt">skilled trade<sup class="c"></sup></span></a></li>
+<li><a href="/d/small-biz-ads/search/biz" class="biz" data-cat="biz"><span class="txt">sm biz ads<sup class="c"></sup></span></a></li>
+<li><a href="/d/travel-vacation-services/search/trv" class="trv" data-cat="trv"><span class="txt">travel/vac<sup class="c"></sup></span></a></li>
+<li><a href="/d/writing-editing-translation/search/wet" class="wet" data-cat="wet"><span class="txt">write/ed/tran<sup class="c"></sup></span></a></li>
+</ul>
+</div>
+</div>
+
+                
+        <div id="forums" class="col">
+        <h3 class="ban"><a href="https://forums.craigslist.org/?areaID=47" class="forums" data-cat="forums"><span class="txt">discussion forums<sup class="c"></sup></span></a></h3>
+        <div class="cats">
+        <ul id="forums0" class="left">
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=5178"><span class="txt">android<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=3232"><span class="txt">apple<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=49"><span class="txt">arts<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=78"><span class="txt">atheist<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=5"><span class="txt">autos<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=88"><span class="txt">beauty<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=95"><span class="txt">bikes<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=47"><span class="txt">celebs<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=34"><span class="txt">comp<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=1564"><span class="txt">cosmos<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=122"><span class="txt">diet<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=76"><span class="txt">divorce<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=130"><span class="txt">dying<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=99"><span class="txt">eco<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=8"><span class="txt">feedbk<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=41"><span class="txt">film<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=64"><span class="txt">fixit<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=22"><span class="txt">food<sup class="c"></sup></span></a></li>
+</ul>
+<ul id="forums1" class="mc">
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=2007"><span class="txt">frugal<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=85"><span class="txt">gaming<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=54"><span class="txt">garden<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=575"><span class="txt">haiku<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=9"><span class="txt">help<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=81"><span class="txt">history<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=6"><span class="txt">housing<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=7"><span class="txt">jobs<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=1257"><span class="txt">jokes<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=73"><span class="txt">legal<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=1991"><span class="txt">linux<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=79"><span class="txt">manners<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=1926"><span class="txt">marriage<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=53"><span class="txt">money<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=24"><span class="txt">music<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=4"><span class="txt">open<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=16"><span class="txt">outdoor<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=39"><span class="txt">parent<sup class="c"></sup></span></a></li>
+</ul>
+<ul id="forums2" class="mc">
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=26"><span class="txt">pets<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=71"><span class="txt">philos<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=5500"><span class="txt">photo<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=20"><span class="txt">politics<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=29"><span class="txt">psych<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=12"><span class="txt">recover<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=59"><span class="txt">religion<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=28"><span class="txt">rofo<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=96"><span class="txt">science<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=93"><span class="txt">spirit<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=32"><span class="txt">sports<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=2012"><span class="txt">super<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=1040"><span class="txt">tax<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=42"><span class="txt">travel<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=98"><span class="txt">tv<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=2400"><span class="txt">vegan<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=7000"><span class="txt">words<sup class="c"></sup></span></a></li>
+<li><a href="https://forums.craigslist.org/?areaID=47&amp;forumID=27"><span class="txt">writing<sup class="c"></sup></span></a></li>
+</ul>
+</div>
+</div>
+
+            </div>
+            <div class="housing">
+                
+        <div id="hhh" class="col">
+        <h3 class="ban"><a href="/d/housing/search/hhh" class="hhh" data-alltitle="all housing" data-cat="hhh"><span class="txt">housing<sup class="c"></sup></span></a></h3>
+        <div class="cats">
+        <ul id="hhh0" >
+<li><a href="/d/apartments-housing-for-rent/search/apa" class="apa" data-cat="apa"><span class="txt">apts / housing<sup class="c"></sup></span></a></li>
+<li><a href="/d/housing-swap/search/swp" class="swp" data-cat="swp"><span class="txt">housing swap<sup class="c"></sup></span></a></li>
+<li><a href="/d/all-housing-wanted/search/hsw" class="hsw" data-cat="hsw"><span class="txt">housing wanted<sup class="c"></sup></span></a></li>
+<li><a href="/d/office-commercial/search/off" class="off" data-cat="off"><span class="txt">office / commercial<sup class="c"></sup></span></a></li>
+<li><a href="/d/parking-storage/search/prk" class="prk" data-cat="prk"><span class="txt">parking / storage<sup class="c"></sup></span></a></li>
+<li><a href="/d/real-estate/search/rea" class="rea" data-cat="rea"><span class="txt">real estate for sale<sup class="c"></sup></span></a></li>
+<li><a href="/d/rooms-shares/search/roo" class="roo" data-cat="roo"><span class="txt">rooms / shared<sup class="c"></sup></span></a></li>
+<li><a href="/d/wanted%3A-room-share/search/sha" class="sha" data-cat="sha"><span class="txt">rooms wanted<sup class="c"></sup></span></a></li>
+<li><a href="/d/sublets-temporary/search/sub" class="sub" data-cat="sub"><span class="txt">sublets / temporary<sup class="c"></sup></span></a></li>
+<li><a href="/d/vacation-rentals/search/vac" class="vac" data-cat="vac"><span class="txt">vacation rentals<sup class="c"></sup></span></a></li>
+</ul>
+</div>
+</div>
+
+                
+        <div id="sss" class="col">
+        <h3 class="ban"><a href="/d/for-sale/search/sss" class="sss" data-alltitle="all for sale" data-cat="sss"><span class="txt">for sale<sup class="c"></sup></span></a></h3>
+        <div class="cats">
+        <ul id="sss0" class="left">
+<li><a href="/d/antiques/search/ata" class="ata" data-cat="ata"><span class="txt">antiques<sup class="c"></sup></span></a></li>
+<li><a href="/d/appliances/search/ppa" class="ppa" data-cat="ppa"><span class="txt">appliances<sup class="c"></sup></span></a></li>
+<li><a href="/d/arts-crafts/search/ara" class="ara" data-cat="ara"><span class="txt">arts+crafts<sup class="c"></sup></span></a></li>
+<li><a href="/d/atvs%2C-utvs%2C-snowmobiles/search/sna" class="sna" data-cat="sna"><span class="txt">atv/utv/sno<sup class="c"></sup></span></a></li>
+<li><a href="/d/auto-parts/search/pta" class="pta" data-cat="pta"><span class="txt">auto parts<sup class="c"></sup></span></a></li>
+<li><a href="/d/aviation/search/ava" class="ava" data-cat="ava"><span class="txt">aviation<sup class="c"></sup></span></a></li>
+<li><a href="/d/baby-kid-stuff/search/baa" class="baa" data-cat="baa"><span class="txt">baby+kid<sup class="c"></sup></span></a></li>
+<li><a href="/d/barter/search/bar" class="bar" data-cat="bar"><span class="txt">barter<sup class="c"></sup></span></a></li>
+<li><a href="/d/health-and-beauty/search/haa" class="haa" data-cat="haa"><span class="txt">beauty+hlth<sup class="c"></sup></span></a></li>
+<li><a href="/d/bicycle-parts/search/bip" class="bip" data-cat="bip"><span class="txt">bike parts<sup class="c"></sup></span></a></li>
+<li><a href="/d/bicycles/search/bia" class="bia" data-cat="bia"><span class="txt">bikes<sup class="c"></sup></span></a></li>
+<li><a href="/d/boat-parts-accessories/search/bpa" class="bpa" data-cat="bpa"><span class="txt">boat parts<sup class="c"></sup></span></a></li>
+<li><a href="/d/boats/search/boo" class="boo" data-cat="boo"><span class="txt">boats<sup class="c"></sup></span></a></li>
+<li><a href="/d/books-magazines/search/bka" class="bka" data-cat="bka"><span class="txt">books<sup class="c"></sup></span></a></li>
+<li><a href="/d/business/search/bfa" class="bfa" data-cat="bfa"><span class="txt">business<sup class="c"></sup></span></a></li>
+<li><a href="/d/cars-trucks/search/cta" class="cta" data-cat="cta"><span class="txt">cars+trucks<sup class="c"></sup></span></a></li>
+<li><a href="/d/cds-dvds-vhs/search/ema" class="ema" data-cat="ema"><span class="txt">cds/dvd/vhs<sup class="c"></sup></span></a></li>
+<li><a href="/d/cell-phones/search/moa" class="moa" data-cat="moa"><span class="txt">cell phones<sup class="c"></sup></span></a></li>
+<li><a href="/d/clothing-accessories/search/cla" class="cla" data-cat="cla"><span class="txt">clothes+acc<sup class="c"></sup></span></a></li>
+<li><a href="/d/collectibles/search/cba" class="cba" data-cat="cba"><span class="txt">collectibles<sup class="c"></sup></span></a></li>
+<li><a href="/d/computer-parts/search/syp" class="syp" data-cat="syp"><span class="txt">computer parts<sup class="c"></sup></span></a></li>
+<li><a href="/d/computers/search/sya" class="sya" data-cat="sya"><span class="txt">computers<sup class="c"></sup></span></a></li>
+<li><a href="/d/electronics/search/ela" class="ela" data-cat="ela"><span class="txt">electronics<sup class="c"></sup></span></a></li>
+</ul>
+<ul id="sss1" class="mc">
+<li><a href="/d/farm-garden/search/gra" class="gra" data-cat="gra"><span class="txt">farm+garden<sup class="c"></sup></span></a></li>
+<li><a href="/d/free-stuff/search/zip" class="zip" data-cat="zip"><span class="txt">free<sup class="c"></sup></span></a></li>
+<li><a href="/d/furniture/search/fua" class="fua" data-cat="fua"><span class="txt">furniture<sup class="c"></sup></span></a></li>
+<li><a href="/d/garage-moving-sales/search/gms" class="gms" data-cat="gms"><span class="txt">garage sale<sup class="c"></sup></span></a></li>
+<li><a href="/d/general-for-sale/search/foa" class="foa" data-cat="foa"><span class="txt">general<sup class="c"></sup></span></a></li>
+<li><a href="/d/heavy-equipment/search/hva" class="hva" data-cat="hva"><span class="txt">heavy equip<sup class="c"></sup></span></a></li>
+<li><a href="/d/household-items/search/hsa" class="hsa" data-cat="hsa"><span class="txt">household<sup class="c"></sup></span></a></li>
+<li><a href="/d/jewelry/search/jwa" class="jwa" data-cat="jwa"><span class="txt">jewelry<sup class="c"></sup></span></a></li>
+<li><a href="/d/materials/search/maa" class="maa" data-cat="maa"><span class="txt">materials<sup class="c"></sup></span></a></li>
+<li><a href="/d/motorcycle-parts-accessories/search/mpa" class="mpa" data-cat="mpa"><span class="txt">motorcycle parts<sup class="c"></sup></span></a></li>
+<li><a href="/d/motorcycles-scooters/search/mca" class="mca" data-cat="mca"><span class="txt">motorcycles<sup class="c"></sup></span></a></li>
+<li><a href="/d/musical-instruments/search/msa" class="msa" data-cat="msa"><span class="txt">music instr<sup class="c"></sup></span></a></li>
+<li><a href="/d/photo-video/search/pha" class="pha" data-cat="pha"><span class="txt">photo+video<sup class="c"></sup></span></a></li>
+<li><a href="/d/recreational-vehicles/search/rva" class="rva" data-cat="rva"><span class="txt">rvs+camp<sup class="c"></sup></span></a></li>
+<li><a href="/d/sporting-goods/search/sga" class="sga" data-cat="sga"><span class="txt">sporting<sup class="c"></sup></span></a></li>
+<li><a href="/d/tickets/search/tia" class="tia" data-cat="tia"><span class="txt">tickets<sup class="c"></sup></span></a></li>
+<li><a href="/d/tools/search/tla" class="tla" data-cat="tla"><span class="txt">tools<sup class="c"></sup></span></a></li>
+<li><a href="/d/toys-games/search/taa" class="taa" data-cat="taa"><span class="txt">toys+games<sup class="c"></sup></span></a></li>
+<li><a href="/d/trailers/search/tra" class="tra" data-cat="tra"><span class="txt">trailers<sup class="c"></sup></span></a></li>
+<li><a href="/d/video-gaming/search/vga" class="vga" data-cat="vga"><span class="txt">video gaming<sup class="c"></sup></span></a></li>
+<li><a href="/d/wanted/search/waa" class="waa" data-cat="waa"><span class="txt">wanted<sup class="c"></sup></span></a></li>
+<li><a href="/d/auto-wheels-tires/search/wta" class="wta" data-cat="wta"><span class="txt">wheels+tires<sup class="c"></sup></span></a></li>
+</ul>
+</div>
+</div>
+
+            </div>
+            <div class="jobs">
+                
+        <div id="jjj" class="col">
+        <h3 class="ban"><a href="/d/jobs/search/jjj" class="jjj" data-alltitle="all jobs" data-cat="jjj"><span class="txt">jobs<sup class="c"></sup></span></a></h3>
+        <div class="cats">
+        <ul id="jjj0" >
+<li><a href="/d/accounting-finance/search/acc" class="acc" data-cat="acc"><span class="txt">accounting+finance<sup class="c"></sup></span></a></li>
+<li><a href="/d/admin-office/search/ofc" class="ofc" data-cat="ofc"><span class="txt">admin / office<sup class="c"></sup></span></a></li>
+<li><a href="/d/architect-engineer-cad/search/egr" class="egr" data-cat="egr"><span class="txt">arch / engineering<sup class="c"></sup></span></a></li>
+<li><a href="/d/art-media-design/search/med" class="med" data-cat="med"><span class="txt">art / media / design<sup class="c"></sup></span></a></li>
+<li><a href="/d/science-biotech/search/sci" class="sci" data-cat="sci"><span class="txt">biotech / science<sup class="c"></sup></span></a></li>
+<li><a href="/d/business-mgmt/search/bus" class="bus" data-cat="bus"><span class="txt">business / mgmt<sup class="c"></sup></span></a></li>
+<li><a href="/d/customer-service/search/csr" class="csr" data-cat="csr"><span class="txt">customer service<sup class="c"></sup></span></a></li>
+<li><a href="/d/education-teaching/search/edu" class="edu" data-cat="edu"><span class="txt">education<sup class="c"></sup></span></a></li>
+<li><a href="/d/et-cetera/search/etc" class="etc" data-cat="etc"><span class="txt">etc / misc<sup class="c"></sup></span></a></li>
+<li><a href="/d/food-beverage-hospitality/search/fbh" class="fbh" data-cat="fbh"><span class="txt">food / bev / hosp<sup class="c"></sup></span></a></li>
+<li><a href="/d/general-labor/search/lab" class="lab" data-cat="lab"><span class="txt">general labor<sup class="c"></sup></span></a></li>
+<li><a href="/d/government/search/gov" class="gov" data-cat="gov"><span class="txt">government<sup class="c"></sup></span></a></li>
+<li><a href="/d/human-resource/search/hum" class="hum" data-cat="hum"><span class="txt">human resources<sup class="c"></sup></span></a></li>
+<li><a href="/d/legal-paralegal/search/lgl" class="lgl" data-cat="lgl"><span class="txt">legal  /  paralegal<sup class="c"></sup></span></a></li>
+<li><a href="/d/manufacturing/search/mnu" class="mnu" data-cat="mnu"><span class="txt">manufacturing<sup class="c"></sup></span></a></li>
+<li><a href="/d/marketing-advertising-pr/search/mar" class="mar" data-cat="mar"><span class="txt">marketing / pr / ad<sup class="c"></sup></span></a></li>
+<li><a href="/d/healthcare/search/hea" class="hea" data-cat="hea"><span class="txt">medical / health<sup class="c"></sup></span></a></li>
+<li><a href="/d/nonprofit/search/npo" class="npo" data-cat="npo"><span class="txt">nonprofit sector<sup class="c"></sup></span></a></li>
+<li><a href="/d/real-estate/search/rej" class="rej" data-cat="rej"><span class="txt">real estate<sup class="c"></sup></span></a></li>
+<li><a href="/d/retail-wholesale/search/ret" class="ret" data-cat="ret"><span class="txt">retail / wholesale<sup class="c"></sup></span></a></li>
+<li><a href="/d/sales/search/sls" class="sls" data-cat="sls"><span class="txt">sales / biz dev<sup class="c"></sup></span></a></li>
+<li><a href="/d/salon-spa-fitness/search/spa" class="spa" data-cat="spa"><span class="txt">salon / spa / fitness<sup class="c"></sup></span></a></li>
+<li><a href="/d/security/search/sec" class="sec" data-cat="sec"><span class="txt">security<sup class="c"></sup></span></a></li>
+<li><a href="/d/skilled-trades-artisan/search/trd" class="trd" data-cat="trd"><span class="txt">skilled trade / craft<sup class="c"></sup></span></a></li>
+<li><a href="/d/software-qa-dba-etc/search/sof" class="sof" data-cat="sof"><span class="txt">software / qa / dba<sup class="c"></sup></span></a></li>
+<li><a href="/d/systems-networking/search/sad" class="sad" data-cat="sad"><span class="txt">systems / network<sup class="c"></sup></span></a></li>
+<li><a href="/d/technical-support/search/tch" class="tch" data-cat="tch"><span class="txt">technical support<sup class="c"></sup></span></a></li>
+<li><a href="/d/transportation/search/trp" class="trp" data-cat="trp"><span class="txt">transport<sup class="c"></sup></span></a></li>
+<li><a href="/d/tv-film-video-radio/search/tfr" class="tfr" data-cat="tfr"><span class="txt">tv / film / video<sup class="c"></sup></span></a></li>
+<li><a href="/d/web-html-info-design/search/web" class="web" data-cat="web"><span class="txt">web / info design<sup class="c"></sup></span></a></li>
+<li><a href="/d/writing-editing/search/wri" class="wri" data-cat="wri"><span class="txt">writing / editing<sup class="c"></sup></span></a></li>
+</ul>
+</div>
+</div>
+
+                
+        <div id="ggg" class="col">
+        <h3 class="ban"><a href="/d/gigs/search/ggg" class="ggg" data-alltitle="all gigs" data-cat="ggg"><span class="txt">gigs<sup class="c"></sup></span></a></h3>
+        <div class="cats">
+        <ul id="ggg0" class="left">
+<li><a href="/d/computer-gigs/search/cpg" class="cpg" data-cat="cpg"><span class="txt">computer<sup class="c"></sup></span></a></li>
+<li><a href="/d/creative-gigs/search/crg" class="crg" data-cat="crg"><span class="txt">creative<sup class="c"></sup></span></a></li>
+<li><a href="/d/crew-gigs/search/cwg" class="cwg" data-cat="cwg"><span class="txt">crew<sup class="c"></sup></span></a></li>
+<li><a href="/d/domestic-gigs/search/dmg" class="dmg" data-cat="dmg"><span class="txt">domestic<sup class="c"></sup></span></a></li>
+</ul>
+<ul id="ggg1" class="mc">
+<li><a href="/d/event-gigs/search/evg" class="evg" data-cat="evg"><span class="txt">event<sup class="c"></sup></span></a></li>
+<li><a href="/d/labor-gigs/search/lbg" class="lbg" data-cat="lbg"><span class="txt">labor<sup class="c"></sup></span></a></li>
+<li><a href="/d/talent-gigs/search/tlg" class="tlg" data-cat="tlg"><span class="txt">talent<sup class="c"></sup></span></a></li>
+<li><a href="/d/writing-gigs/search/wrg" class="wrg" data-cat="wrg"><span class="txt">writing<sup class="c"></sup></span></a></li>
+</ul>
+</div>
+</div>
+
+                
+        <div id="rrr" class="col">
+        <h3 class="ban"><a href="/d/resumes/search/rrr" class="rrr" data-alltitle="all resumes" data-cat="rrr"><span class="txt">resumes<sup class="c"></sup></span></a></h3>
+        <div class="cats">
+        </div>
+</div>
+
+            </div>
+        </div>
+        <div id="rightbar">
+            <div id="langlinks">
+    <select name="lang" id="chlang" class="js-only">
+        <option value="?lang=da&amp;setlang=1">dansk</option><option value="?lang=de&amp;setlang=1">deutsch</option><option selected value="?lang=en&amp;cc=us&amp;setlang=1">english</option><option value="?lang=es&amp;cc=mx&amp;setlang=1">español</option><option value="?lang=fr&amp;setlang=1">français</option><option value="?lang=it&amp;setlang=1">italiano</option><option value="?lang=pt&amp;setlang=1">português</option><option value="?lang=fi&amp;setlang=1">suomi</option><option value="?lang=sv&amp;setlang=1">svenska</option><option value="?lang=vi&amp;setlang=1">tiếng việt</option><option value="?lang=tr&amp;setlang=1">türkçe</option><option value="?lang=ru&amp;setlang=1">русский</option><option value="?lang=zh&amp;setlang=1">中文</option><option value="?lang=ja&amp;setlang=1">日本語</option><option value="?lang=ko&amp;setlang=1">한국말</option>
+    </select>
+    
+
+    <div id="nojschlang" class="no-js ">
+        <a href="?lang=da&amp;setlang=1">dansk</a><br><a href="?lang=de&amp;setlang=1">deutsch</a><br><b>english</b><br><a href="?lang=es&amp;cc=mx&amp;setlang=1">español</a><br><a href="?lang=fr&amp;setlang=1">français</a><br><a href="?lang=it&amp;setlang=1">italiano</a><br><a href="?lang=pt&amp;setlang=1">português</a><br><a href="?lang=fi&amp;setlang=1">suomi</a><br><a href="?lang=sv&amp;setlang=1">svenska</a><br><a href="?lang=vi&amp;setlang=1">tiếng việt</a><br><a href="?lang=tr&amp;setlang=1">türkçe</a><br><a href="?lang=ru&amp;setlang=1">русский</a><br><a href="?lang=zh&amp;setlang=1">中文</a><br><a href="?lang=ja&amp;setlang=1">日本語</a><br><a href="?lang=ko&amp;setlang=1">한국말</a><br>
+    </div>
+</div>
+
+            <ul class="menu collapsible"><li class=" expand s"><h5 class="ban">nearby cl</h5><ul class="acitem">
+<li class="s"><a href="//appleton.craigslist.org/">appleton</a>
+<li class="s"><a href="//battlecreek.craigslist.org/">battle creek</a>
+<li class="s"><a href="//bn.craigslist.org/">bloomington</a>
+<li class="s"><a href="//centralmich.craigslist.org/">central mi</a>
+<li class="s"><a href="//chicago.craigslist.org/">chicago</a>
+<li class="s"><a href="//dubuque.craigslist.org/">dubuque</a>
+<li class="s"><a href="//fortwayne.craigslist.org/">fort wayne</a>
+<li class="s"><a href="//grandrapids.craigslist.org/">grand rapids</a>
+<li class="s"><a href="//greenbay.craigslist.org/">green bay</a>
+<li class="s"><a href="//holland.craigslist.org/">holland</a>
+<li class="s"><a href="//jxn.craigslist.org/">jackson</a>
+<li class="s"><a href="//janesville.craigslist.org/">janesville</a>
+<li class="s"><a href="//kalamazoo.craigslist.org/">kalamazoo</a>
+<li class="s"><a href="//racine.craigslist.org/">kenosha-racine</a>
+<li class="s"><a href="//kokomo.craigslist.org/">kokomo</a>
+<li class="s"><a href="//lacrosse.craigslist.org/">la crosse</a>
+<li class="s"><a href="//lansing.craigslist.org/">lansing</a>
+<li class="s"><a href="//lasalle.craigslist.org/">la salle co</a>
+<li class="s"><a href="//madison.craigslist.org/">madison</a>
+<li class="s"><a href="//muskegon.craigslist.org/">muskegon</a>
+<li class="s"><a href="//nmi.craigslist.org/">northern mi</a>
+<li class="s"><a href="//northernwi.craigslist.org/">northern wi</a>
+<li class="s"><a href="//peoria.craigslist.org/">peoria</a>
+<li class="s"><a href="//quadcities.craigslist.org/">quad cities</a>
+<li class="s"><a href="//rockford.craigslist.org/">rockford</a>
+<li class="s"><a href="//sheboygan.craigslist.org/">sheboygan</a>
+<li class="s"><a href="//southbend.craigslist.org/">south bend</a>
+<li class="s"><a href="//swmi.craigslist.org/">southwest mi</a>
+<li class="s"><a href="//tippecanoe.craigslist.org/">tippecanoe</a>
+<li class="s"><a href="//wausau.craigslist.org/">wausau</a>
+</ul>
+</li><li class=" s"><h5 class="ban">us cities</h5><ul class="acitem">
+<li><a href="http://atlanta.craigslist.org/">atlanta</a>
+<li><a href="http://austin.craigslist.org/">austin</a>
+<li><a href="http://boston.craigslist.org/">boston</a>
+<li><a href="http://chicago.craigslist.org/">chicago</a>
+<li><a href="http://dallas.craigslist.org/">dallas</a>
+<li><a href="http://denver.craigslist.org/">denver</a>
+<li><a href="http://detroit.craigslist.org/">detroit</a>
+<li><a href="http://houston.craigslist.org/">houston</a>
+<li><a href="http://lasvegas.craigslist.org/">las&nbsp;vegas</a>
+<li><a href="http://losangeles.craigslist.org/">los&nbsp;angeles</a>
+<li><a href="http://miami.craigslist.org/">miami</a>
+<li><a href="http://minneapolis.craigslist.org/">minneapolis</a>
+<li><a href="http://newyork.craigslist.org/">new&nbsp;york</a>
+<li><a href="http://orangecounty.craigslist.org/">orange&nbsp;co</a>
+<li><a href="http://philadelphia.craigslist.org/">philadelphia</a>
+<li><a href="http://phoenix.craigslist.org/">phoenix</a>
+<li><a href="http://portland.craigslist.org/">portland</a>
+<li><a href="http://raleigh.craigslist.org/">raleigh</a>
+<li><a href="http://sacramento.craigslist.org/">sacramento</a>
+<li><a href="http://sandiego.craigslist.org/">san&nbsp;diego</a>
+<li><a href="http://seattle.craigslist.org/">seattle</a>
+<li><a href="http://sfbay.craigslist.org/">sf&nbsp;bayarea</a>
+<li><a href="http://washingtondc.craigslist.org/">wash dc</a>
+<li class="s more"><a href="//geo.craigslist.org/iso/us">more ...</a></li>
+</ul>
+</li><li class=""><h5 class="ban">us states</h5><ul class="acitem">
+<li><a href="//geo.craigslist.org/iso/us/al">alabama</a>
+<li><a href="//geo.craigslist.org/iso/us/ak">alaska</a>
+<li><a href="//geo.craigslist.org/iso/us/az">arizona</a>
+<li><a href="//geo.craigslist.org/iso/us/ar">arkansas</a>
+<li><a href="//geo.craigslist.org/iso/us/ca">california</a>
+<li><a href="//geo.craigslist.org/iso/us/co">colorado</a>
+<li><a href="//geo.craigslist.org/iso/us/ct">connecticut</a>
+<li><a href="//geo.craigslist.org/iso/us/dc">dc</a>
+<li><a href="//geo.craigslist.org/iso/us/de">delaware</a>
+<li><a href="//geo.craigslist.org/iso/us/fl">florida</a>
+<li><a href="//geo.craigslist.org/iso/us/ga">georgia</a>
+<li><a href="//geo.craigslist.org/iso/gu">guam</a>
+<li><a href="//geo.craigslist.org/iso/us/hi">hawaii</a>
+<li><a href="//geo.craigslist.org/iso/us/id">idaho</a>
+<li><a href="//geo.craigslist.org/iso/us/il">illinois</a>
+<li><a href="//geo.craigslist.org/iso/us/in">indiana</a>
+<li><a href="//geo.craigslist.org/iso/us/ia">iowa</a>
+<li><a href="//geo.craigslist.org/iso/us/ks">kansas</a>
+<li><a href="//geo.craigslist.org/iso/us/ky">kentucky</a>
+<li><a href="//geo.craigslist.org/iso/us/la">louisiana</a>
+<li><a href="//geo.craigslist.org/iso/us/me">maine</a>
+<li><a href="//geo.craigslist.org/iso/us/md">maryland</a>
+<li><a href="//geo.craigslist.org/iso/us/ma">mass</a>
+<li><a href="//geo.craigslist.org/iso/us/mi">michigan</a>
+<li><a href="//geo.craigslist.org/iso/us/mn">minnesota</a>
+<li><a href="//geo.craigslist.org/iso/us/ms">mississippi</a>
+<li><a href="//geo.craigslist.org/iso/us/mo">missouri</a>
+<li><a href="//geo.craigslist.org/iso/us/mt">montana</a>
+<li><a href="//geo.craigslist.org/iso/us/nc">n carolina</a>
+<li><a href="//geo.craigslist.org/iso/us/ne">nebraska</a>
+<li><a href="//geo.craigslist.org/iso/us/nv">nevada</a>
+<li><a href="//geo.craigslist.org/iso/us/nj">new jersey</a>
+<li><a href="//geo.craigslist.org/iso/us/nm">new mexico</a>
+<li><a href="//geo.craigslist.org/iso/us/ny">new york</a>
+<li><a href="//geo.craigslist.org/iso/us/nh">n hampshire</a>
+<li><a href="//geo.craigslist.org/iso/us/nd">north dakota</a>
+<li><a href="//geo.craigslist.org/iso/us/oh">ohio</a>
+<li><a href="//geo.craigslist.org/iso/us/ok">oklahoma</a>
+<li><a href="//geo.craigslist.org/iso/us/or">oregon</a>
+<li><a href="//geo.craigslist.org/iso/us/pa">pennsylvania</a>
+<li><a href="//geo.craigslist.org/iso/pr">puerto rico</a>
+<li><a href="//geo.craigslist.org/iso/us/ri">rhode island</a>
+<li><a href="//geo.craigslist.org/iso/us/sc">s carolina</a>
+<li><a href="//geo.craigslist.org/iso/us/sd">south dakota</a>
+<li><a href="//geo.craigslist.org/iso/us/tn">tennessee</a>
+<li><a href="//geo.craigslist.org/iso/us/tx">texas</a>
+<li><a href="//geo.craigslist.org/iso/us/ut">utah</a>
+<li><a href="//geo.craigslist.org/iso/us/vt">vermont</a>
+<li><a href="//geo.craigslist.org/iso/us/va">virginia</a>
+<li><a href="//geo.craigslist.org/iso/us/wa">washington</a>
+<li><a href="//geo.craigslist.org/iso/us/wv">west virginia</a>
+<li><a href="//geo.craigslist.org/iso/us/wi">wisconsin</a>
+<li><a href="//geo.craigslist.org/iso/us/wy">wyoming</a>
+<li class="s more"><a href="//geo.craigslist.org/iso/us">more ...</a></li>
+</ul>
+</li><li class=" s"><h5 class="ban">canada</h5><ul class="acitem">
+<li><a href="//calgary.craigslist.org/">calgary</a>
+<li><a href="//edmonton.craigslist.org/">edmonton</a>
+<li><a href="//halifax.craigslist.org/">halifax</a>
+<li><a href="//montreal.craigslist.org/">montreal</a>
+<li><a href="//ottawa.craigslist.org/">ottawa</a>
+<li><a href="//saskatoon.craigslist.org/">saskatoon</a>
+<li><a href="//toronto.craigslist.org/">toronto</a>
+<li><a href="//vancouver.craigslist.org/">vancouver</a>
+<li><a href="//victoria.craigslist.org/">victoria</a>
+<li><a href="//winnipeg.craigslist.org/">winnipeg</a>
+<li class="s more"><a href="//geo.craigslist.org/iso/ca">more ...</a></li>
+</ul>
+</li><li><h5 class="ban">cl worldwide</h5><ul class="acitem collapsible">
+
+                <li class="cont s">
+                    <h5>africa</h5>
+                    <ul class="acitem">
+            <li><a href="//geo.craigslist.org/iso/eg">egypt</a>
+<li><a href="//geo.craigslist.org/iso/et">ethiopia</a>
+<li><a href="//geo.craigslist.org/iso/gh">ghana</a>
+<li><a href="//geo.craigslist.org/iso/ke">kenya</a>
+<li><a href="//geo.craigslist.org/iso/ma">morocco</a>
+<li><a href="//geo.craigslist.org/iso/za">south africa</a>
+<li><a href="//geo.craigslist.org/iso/tn">tunisia</a>
+</ul></li>
+
+                <li class="cont s">
+                    <h5>americas</h5>
+                    <ul class="acitem">
+            <li><a href="//geo.craigslist.org/iso/ar">argentina</a>
+<li><a href="//geo.craigslist.org/iso/bo">bolivia</a>
+<li><a href="http://rio.craigslist.org/">brazil</a>
+<li><a href="https://www.craigslist.org/about/sites#CA">canada</a>
+<li><a href="//geo.craigslist.org/iso/cl">chile</a>
+<li><a href="//geo.craigslist.org/iso/co">colombia</a>
+<li><a href="//geo.craigslist.org/iso/cr">costa rica</a>
+<li><a href="//geo.craigslist.org/iso/do">dom republic</a>
+<li><a href="//geo.craigslist.org/iso/ec">ecuador</a>
+<li><a href="//geo.craigslist.org/iso/sv">el salvador</a>
+<li><a href="//geo.craigslist.org/iso/gt">guatemala</a>
+<li><a href="http://mexicocity.craigslist.org/">mexico</a>
+<li><a href="//geo.craigslist.org/iso/ni">nicaragua</a>
+<li><a href="//geo.craigslist.org/iso/pa">panama</a>
+<li><a href="//geo.craigslist.org/iso/pe">peru</a>
+<li><a href="//geo.craigslist.org/iso/pr">puerto rico</a>
+<li><a href="https://www.craigslist.org/about/sites#US">united states</a>
+<li><a href="//geo.craigslist.org/iso/uy">uruguay</a>
+<li><a href="//geo.craigslist.org/iso/vi">us virgin islands</a>
+<li><a href="//geo.craigslist.org/iso/ve">venezuela</a>
+</ul></li>
+
+                <li class="cont s">
+                    <h5>asia</h5>
+                    <ul class="acitem">
+            <li><a href="//geo.craigslist.org/iso/bd">bangladesh</a>
+<li><a href="http://shanghai.craigslist.org/">china</a>
+<li><a href="//geo.craigslist.org/iso/hk">hong kong</a>
+<li><a href="http://bangalore.craigslist.org/">india</a>
+<li><a href="//geo.craigslist.org/iso/id">indonesia</a>
+<li><a href="//geo.craigslist.org/iso/ir">iran</a>
+<li><a href="//geo.craigslist.org/iso/iq">iraq</a>
+<li><a href="http://telaviv.craigslist.org/">israel</a>
+<li><a href="http://tokyo.craigslist.org/">japan</a>
+<li><a href="//geo.craigslist.org/iso/kw">kuwait</a>
+<li><a href="//geo.craigslist.org/iso/lb">lebanon</a>
+<li><a href="//geo.craigslist.org/iso/my">malaysia</a>
+<li><a href="//geo.craigslist.org/iso/pk">pakistan</a>
+<li><a href="http://manila.craigslist.org/">philippines</a>
+<li><a href="http://moscow.craigslist.org/">russia</a>
+<li><a href="http://singapore.craigslist.org/">singapore</a>
+<li><a href="//geo.craigslist.org/iso/kr">south korea</a>
+<li><a href="//geo.craigslist.org/iso/tw">taiwan</a>
+<li><a href="//geo.craigslist.org/iso/th">thailand</a>
+<li><a href="//geo.craigslist.org/iso/tr">turkey</a>
+<li><a href="//geo.craigslist.org/iso/ae">uae</a>
+<li><a href="//geo.craigslist.org/iso/vn">vietnam</a>
+<li><a href="//geo.craigslist.org/iso/ps">west bank</a>
+</ul></li>
+
+                <li class="cont s">
+                    <h5>europe</h5>
+                    <ul class="acitem">
+            <li><a href="//geo.craigslist.org/iso/at">austria</a>
+<li><a href="//geo.craigslist.org/iso/be">belgium</a>
+<li><a href="//geo.craigslist.org/iso/bg">bulgaria</a>
+<li><a href="//geo.craigslist.org/iso/hr">croatia</a>
+<li><a href="//geo.craigslist.org/iso/cz">czech republic</a>
+<li><a href="//geo.craigslist.org/iso/dk">denmark</a>
+<li><a href="//geo.craigslist.org/iso/fi">finland</a>
+<li><a href="http://paris.craigslist.org/">france</a>
+<li><a href="http://berlin.craigslist.org/">germany</a>
+<li><a href="//geo.craigslist.org/iso/gr">greece</a>
+<li><a href="//geo.craigslist.org/iso/hu">hungary</a>
+<li><a href="//geo.craigslist.org/iso/is">iceland</a>
+<li><a href="//geo.craigslist.org/iso/ie">ireland</a>
+<li><a href="http://rome.craigslist.org/">italy</a>
+<li><a href="//geo.craigslist.org/iso/lu">luxembourg</a>
+<li><a href="//geo.craigslist.org/iso/nl">netherlands</a>
+<li><a href="//geo.craigslist.org/iso/no">norway</a>
+<li><a href="//geo.craigslist.org/iso/pl">poland</a>
+<li><a href="//geo.craigslist.org/iso/pt">portugal</a>
+<li><a href="//geo.craigslist.org/iso/ro">romania</a>
+<li><a href="http://moscow.craigslist.org/">russia</a>
+<li><a href="http://madrid.craigslist.org/">spain</a>
+<li><a href="//geo.craigslist.org/iso/se">sweden</a>
+<li><a href="http://zurich.craigslist.org/">switzerland</a>
+<li><a href="//geo.craigslist.org/iso/tr">turkey</a>
+<li><a href="//geo.craigslist.org/iso/ua">ukraine</a>
+<li><a href="//geo.craigslist.org/iso/gb">united kingdom</a>
+</ul></li>
+
+                <li class="cont s">
+                    <h5>middle east</h5>
+                    <ul class="acitem">
+            <li><a href="//geo.craigslist.org/iso/eg">egypt</a>
+<li><a href="//geo.craigslist.org/iso/iq">iraq</a>
+<li><a href="http://telaviv.craigslist.org/">israel</a>
+<li><a href="//geo.craigslist.org/iso/kw">kuwait</a>
+<li><a href="//geo.craigslist.org/iso/lb">lebanon</a>
+<li><a href="//geo.craigslist.org/iso/tr">turkey</a>
+<li><a href="//geo.craigslist.org/iso/ae">uae</a>
+<li><a href="//geo.craigslist.org/iso/ps">west bank</a>
+</ul></li>
+
+                <li class="cont s">
+                    <h5>oceania</h5>
+                    <ul class="acitem">
+            <li><a href="http://sydney.craigslist.org/">australia</a>
+<li><a href="//geo.craigslist.org/iso/gu">guam</a>
+<li><a href="http://auckland.craigslist.org/">new zealand</a>
+<li><a href="http://manila.craigslist.org/">philippines</a>
+</ul></li>
+</ul>
+</li>
+        </ul>
+        <br>
+        <p class="more">
+            <a href="https://www.craigslist.org/about/sites"><em>more...</em></a>
+        </p>
+    
+        </div>
+    </section>
+    <footer>
+    <ul class="clfooter">
+        <li>&copy; 2020 <span class="desktop">craigslist</span><span class="mobile">CL</span></li>
+        <li><a href="https://www.craigslist.org/about/help/">help</a></li>
+        <li><a href="https://www.craigslist.org/about/scams">safety</a></li>
+        <li class="desktop"><a href="https://www.craigslist.org/about/privacy.policy">privacy</a><sup class="neu">new</sup></li>
+        <li class="desktop"><a href="https://forums.craigslist.org/?forumID=8">feedback</a></li>
+        <li><a href="https://www.craigslist.org/about/terms.of.use">terms</a></li>
+        <li><a href="https://www.craigslist.org/about/">about</a></li>
+        <li class="fsel desktop linklike" data-mode="mobile">mobile</li>
+        <li class="fsel mobile linklike" data-mode="regular">desktop</li>
+    </ul>
+</footer>
+
+</div>
+
+<script type="text/javascript">
+    if (pagemode == 'mobile') {
+        var s = document.getElementById('search');
+        var c = document.getElementById('center');
+        c.insertBefore(s, c.children[0]);
+    }
+</script>
+
+
+        <script type="text/javascript"><!--
+var allText = "all";
+var areaCountry = "US";
+var areaID = "47";
+var categoryNames = {"rrr":"resumes","eee":"events","hhh":"housing","ggg":"gigs","jjj":"jobs","bbb":"services","sss":"for sale","ccc":"community"};
+var noResults = "no results found for";
+--></script>
+    
+
+                <script>
+                try {
+                    if (
+                        !/\/\/.+\.craigslist\.org\/about\//.test(window.location.href)
+                        &&
+                        (!window.addEventListener || JSON.parse(JSON.stringify('x')) !== 'x')
+                    ) {
+                        throw "unsupported browser";
+                    }
+                } catch (e) {
+                    function cleanup() {
+                        document.body.innerHTML = '<div id="cl-unsupported-browser" style="margin:1em;font-size:150%;text-align:center;">We have detected you are using a browser that is missing critical features.<br><br>Please visit craigslist from a modern browser.</div>';
+                        document.body.style = "display:block";
+                    }
+
+                    try {
+                        document.body.style = "display:none";
+                    } catch (e) {
+                    }
+                    window.onload = cleanup;
+                    window.clUnsupportedBrowser = true;
+                }
+                </script>
+            <script src="//www.craigslist.org/js/general-concat.min.js?v=0bff05c88e4db822225cfdee50cadba6" type="text/javascript" ></script>
+
+<script src="//www.craigslist.org/js/homepage-concat.min.js?v=61ea6b8db9fe4d8bdb2291c72a8eface" type="text/javascript" ></script>
+
 </body>
 </html>
