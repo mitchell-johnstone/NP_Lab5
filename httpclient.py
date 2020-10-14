@@ -212,7 +212,7 @@ def read_status_line(data_socket):
     Reads the status line, returns back the status code
     :param data_socket: socket to read response data from
     :return: the status code
-    :author: Mitchell Johsntone
+    :author: Mitchell Johnstone
     """
     return int(read_line(data_socket).split(b' ')[1])
 
