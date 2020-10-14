@@ -10,7 +10,14 @@ A simple HTTP client
 
 Introduction: (Describe the lab in your own words)
 ==================================================
-
+The premise of this lab is to send an http GET request to a certain resource and expect 
+a response on the HTTP port (or HTTPS port based on the link). Then, parse the status line
+of the response, returning the status code of the response. Next, parse the headers of the
+message to determine whether the response has a Transfer-Encoding of 'chunked' or a 
+Content-Length otherwise. Parse the message body based on whether the body should be read
+as a chunked reponse or not. Write the body into text files of the given filename. 
+Note: All of the bytes in this file should be interpreted as ASCII characters because this 
+is an HTTP response.
 
 Summary: (Summarize your experience with the lab and what you learned)
 ======================================================================
