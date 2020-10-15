@@ -15,7 +15,7 @@ a response on the HTTP port (or HTTPS port based on the link). Then, parse the s
 of the response, returning the status code of the response. Next, parse the headers of the
 message to determine whether the response has a Transfer-Encoding of 'chunked' or a 
 Content-Length otherwise. Parse the message body based on whether the body should be read
-as a chunked reponse or not. Write the body into text files of the given filename. 
+as a chunked response or not. Write the body into text files of the given filename.
 Note: All of the bytes in this file should be interpreted as ASCII characters because this 
 is an HTTP response.
 
@@ -25,7 +25,7 @@ Through this lab, we struggled a bit in the beginning to organize the code in a 
 flowed between the methods well. After a bit of tinkering and brainstorming, we realized
 the reading and parsing of the message had to be done concurrently, as the length of the
 message was indeterminate without parsing out the whole message. After reformatting some
-of the method functions, it was straightforward on how to split up tasks and recieve the
+of the method functions, it was straightforward on how to split up tasks and receive the
 response. We learned a lot about how http requests and responses are formatted in order
 to be sent and received properly, with the status line, headers, and body encoding.
 
@@ -47,7 +47,7 @@ import socket
 # import the "regular expressions" module
 import re # https://docs.python.org/3/library/re.html
 
-import ssl
+import ssl # for the HTTPS
 
 
 def main():
